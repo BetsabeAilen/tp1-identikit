@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El Mapa de mi Regreso - Agradecimiento</title>
+    <style>
+        body {
+            background-color: #1A1A1A;
+            background-image: linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)), url("img/fondo-arena.png");
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            color: #F5F5F5;
+            font-family: serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            animation: fadeInAnimation 3s;
+        }
+
+        @keyframes fadeInAnimation {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .titulo-web {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        nav.menu-vertical {
+            flex-shrink: 0;
+        }
+
+        nav.menu-vertical ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: right;
+        }
+
+        nav.menu-vertical li {
+            margin-bottom: 8px;
+        }
+
+        nav.menu-vertical a {
+            color: #F5F5F5;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
+            opacity: 0.62;
+            text-shadow: none;
+        }
+
+        nav.menu-vertical a:hover,
+        nav.menu-vertical a.active {
+            color: #FFFFFF;
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+        }
+
+        main.contenido-bloques {
+            text-align: center;
+            margin-top: 0;
+            padding: 130px 20px 120px;
+        }
+
+        h1.titulo-seccion, h2.titulo-seccion {
+            font-size: 2.5em;
+            line-height: 1.2;
+            margin-bottom: 28px;
+            font-weight: normal;
+            color: #FFFFFF;
+        }
+
+        h2.titulo-seccion {
+            font-size: 2.1em;
+            margin-top: 50px;
+        }
+
+        p.texto-narrativo {
+            font-size: 1.15em;
+            line-height: 1.6;
+            color: #CCCCCC;
+            max-width: 800px;
+            margin: 0 auto 12px auto;
+            text-align: center;
+        }
+
+        .resalte-palabra {
+            color: #FFFFFF;
+            font-weight: 600;
+            text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+        }
+
+        .bloque-narrativo {
+            min-height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0;
+            padding: 20px 0;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .bloque-narrativo.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .intro-inspiracion {
+            margin-bottom: 22px;
+        }
+
+        .sitios-inspiracion {
+            width: min(900px, 94vw);
+            margin: 12px auto 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .sitio-item a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #F5F5F5;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            border-radius: 999px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            opacity: 0.86;
+            transition: opacity 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .sitio-item a:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .icono-link {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            fill: none;
+            opacity: 0.92;
+        }
+
+        .texto-cierre {
+            font-size: 1.08em;
+            color: #D8D8D8;
+            margin: 30px auto 0;
+            font-style: italic;
+            line-height: 1.7;
+            max-width: 720px;
+        }
+
+        .cierre-separado {
+            width: min(820px, 94vw);
+            margin-top: 34px;
+            padding-top: 26px;
+            border-top: 1px solid rgba(255, 255, 255, 0.24);
+        }
+
+        @media (max-width: 900px) {
+            header {
+                padding: 18px 18px;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            nav.menu-vertical ul {
+                text-align: left;
+            }
+
+            main.contenido-bloques {
+                padding-top: 170px;
+                padding-bottom: 50px;
+            }
+
+            h1.titulo-seccion,
+            h2.titulo-seccion {
+                font-size: 2.4em;
+            }
+
+            .sitios-inspiracion {
+                grid-template-columns: 1fr;
+                width: min(520px, 94vw);
+            }
+
+            .bloque-narrativo {
+                min-height: auto;
+                padding: 34px 0;
+            }
+
+            .cierre-separado {
+                margin-top: 26px;
+                padding-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="titulo-web">El Mapa de mi Regreso </h1>
+        <nav class="menu-vertical">
+            <ul>
+                <li><a href="index.html">El Umbral </a></li>
+                <li><a href="huellas.html">Huellas </a></li>
+                <li><a href="vinculos-entrada.html">Vínculos </a></li>
+                <li><a href="fe-rito.html">Fe y rito </a></li>
+                <li><a href="partitura.html">La Partitura </a></li>
+                <li><a href="agradecimiento.html" class="active">Agradecimiento </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="contenido-bloques">
+        <section id="bloque1" class="bloque-narrativo" aria-labelledby="titulo-principal">
+            <h1 id="titulo-principal" class="titulo-seccion" style="font-size: 3.15em;">Gracias por visitar este espacio</h1>
+
+            <p class="texto-narrativo">
+                Si llegaste hasta aquí, gracias por tomarte el tiempo de recorrer estas páginas.
+            </p>
+
+            <p class="texto-narrativo">
+                Este sitio no pretende ser una explicación completa de una vida ni una verdad definitiva sobre nada. Es simplemente una forma de ordenar pensamientos, recuerdos y preguntas que han sido importantes para mí.
+            </p>
+
+            <p class="texto-narrativo">
+                Muchas de las ideas y formas de narrar que aparecen aquí nacieron de la inspiración que encontré en otros proyectos personales en internet. Espacios creados por personas que también sintieron la necesidad de dejar algo escrito, de compartir una parte de su mirada sobre la vida.
+            </p>
+
+            <p class="texto-narrativo">
+                Si este recorrido te despertó alguna reflexión, alguna emoción o incluso alguna pregunta, entonces esta página ya cumplió su propósito.
+            </p>
+
+            <p class="texto-narrativo">
+                <span class="resalte-palabra">Gracias por estar aquí.</span>
+            </p>
+        </section>
+
+        <section id="bloque2" class="bloque-narrativo" aria-labelledby="titulo-inspiracion">
+            <h2 id="titulo-inspiracion" class="titulo-seccion">Sitios que me inspiraron</h2>
+
+            <p class="texto-narrativo intro-inspiracion">Estos proyectos me ayudaron a imaginar la forma de este sitio:</p>
+
+            <ul class="sitios-inspiracion">
+                <li class="sitio-item">
+                    <a href="https://www.thisiscolossal.com" target="_blank" rel="noopener noreferrer" aria-label="Abrir sitio de inspiración Arte">
+                        <svg class="icono-link" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M10 14L21 3"></path>
+                            <path d="M14 3H21V10"></path>
+                            <path d="M21 14V20C21 20.53 20.79 21.04 20.41 21.41C20.04 21.79 19.53 22 19 22H4C3.47 22 2.96 21.79 2.59 21.41C2.21 21.04 2 20.53 2 20V5C2 4.47 2.21 3.96 2.59 3.59C2.96 3.21 3.47 3 4 3H10"></path>
+                        </svg>
+                        <span>Arte</span>
+                    </a>
+                </li>
+                <li class="sitio-item">
+                    <a href="https://www.themarginalian.org" target="_blank" rel="noopener noreferrer" aria-label="Abrir sitio de inspiración Reflexión">
+                        <svg class="icono-link" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M10 14L21 3"></path>
+                            <path d="M14 3H21V10"></path>
+                            <path d="M21 14V20C21 20.53 20.79 21.04 20.41 21.41C20.04 21.79 19.53 22 19 22H4C3.47 22 2.96 21.79 2.59 21.41C2.21 21.04 2 20.53 2 20V5C2 4.47 2.21 3.96 2.59 3.59C2.96 3.21 3.47 3 4 3H10"></path>
+                        </svg>
+                        <span>Reflexión</span>
+                    </a>
+                </li>
+                <li class="sitio-item">
+                    <a href="https://about.me" target="_blank" rel="noopener noreferrer" aria-label="Abrir sitio de inspiración Presentación">
+                        <svg class="icono-link" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M10 14L21 3"></path>
+                            <path d="M14 3H21V10"></path>
+                            <path d="M21 14V20C21 20.53 20.79 21.04 20.41 21.41C20.04 21.79 19.53 22 19 22H4C3.47 22 2.96 21.79 2.59 21.41C2.21 21.04 2 20.53 2 20V5C2 4.47 2.21 3.96 2.59 3.59C2.96 3.21 3.47 3 4 3H10"></path>
+                        </svg>
+                        <span>Presentación</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="cierre-separado">
+                <p class="texto-cierre">
+                    A veces una página web puede ser solo eso:<br>
+                    una forma de dejar una huella tranquila en el tiempo.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bloques = document.querySelectorAll('.bloque-narrativo');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.35
+            });
+
+            bloques.forEach((bloque) => observer.observe(bloque));
+        });
+    </script>
+
+</body>
+</html>

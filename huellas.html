@@ -1,0 +1,366 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El Mapa de mi Regreso - Huellas</title>
+    <style>
+        /* --- Estilos Base (Copiados de index.html para coherencia) --- */
+        
+        body {
+            /* Estética sobria con fondo de arena oscura y texto blanco suave */
+            background-color: #1A1A1A; 
+            background-image: linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)), url("img/fondo-arena.png"); /* Mismo fondo que index.html pero más difuso */
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            color: #F5F5F5;
+            /* Tipografía Serif para el cuerpo */
+            font-family: serif; 
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            /* El fade-in general de la página al cargar */
+            animation: fadeInAnimation 3s;
+        }
+
+        /* Definición de la animación fade-in */
+        @keyframes fadeInAnimation {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Maquetación del Encabezado (Header) --- */
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .titulo-web {
+            /* Título de la web en el extremo superior izquierdo  */
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* --- Menú de Navegación Vertical Minimalista (Derecha) --- */
+        
+        nav.menu-vertical {
+            flex-shrink: 0;
+        }
+
+        nav.menu-vertical ul {
+            list-style-type: none; 
+            margin: 0;
+            padding: 0;
+            text-align: right; 
+        }
+
+        nav.menu-vertical li {
+            margin-bottom: 8px;
+        }
+
+        nav.menu-vertical a {
+            /* Estilos de opacidad y transiciones copiados de index.html */
+            color: #F5F5F5; 
+            text-decoration: none; 
+            font-size: 16px;
+            transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
+            opacity: 0.62;
+            text-shadow: none;
+        }
+
+        nav.menu-vertical a:hover,
+        nav.menu-vertical a.active {
+            color: #FFFFFF;
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+        }
+
+        /* --- Contenido Principal Maquetado por Bloques --- */
+        
+        main.contenido-bloques {
+            text-align: center; 
+            margin-top: 0;
+            padding: 130px 20px 120px;
+        }
+
+        /* Estilo para los Títulos de cada Bloque (h1 y h2) */
+        h1.titulo-seccion, h2.titulo-seccion {
+            font-size: 2.5em; /* Un poco más pequeño que la frase principal de index */
+            line-height: 1.2;
+            margin-bottom: 28px;
+            font-weight: normal;
+            color: #FFFFFF;
+        }
+
+        h2.titulo-seccion {
+            font-size: 2.1em;
+            margin-top: 50px; /* Espacio antes de cada h2 */
+        }
+
+        /* Clase para el resalte de palabras (copiado de index) */
+        .resalte-palabra {
+            color: #FFFFFF;
+            font-weight: 600;
+            text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+        }
+
+        /* Estilo para los párrafos de texto narrativo */
+        p.texto-narrativo {
+            font-size: 1.15em;
+            line-height: 1.6;
+            color: #CCCCCC;
+            max-width: 800px; /* Limita el ancho para lectura cómoda */
+            margin: 0 auto 12px auto; /* Centrado horizontal */
+            text-align: center; /* Texto centrado */
+        }
+
+        /* Contenedor genérico para cada bloque con flecha */
+        .bloque-narrativo {
+            min-height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0; /* Cada bloque ocupa su propia pantalla */
+            padding: 20px 0;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .bloque-narrativo.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Requisito 2: Estilos para la Tabla de Gustos (Minimalista) --- */
+        
+        table.tabla-gustos {
+            border-collapse: collapse;
+            width: 82%;
+            max-width: 760px;
+            margin: 36px auto;
+            text-align: left;
+            font-size: 0.92em;
+            color: #CCCCCC;
+            background-color: rgba(255, 255, 255, 0.03); /* Fondo muy tenue */
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table.tabla-gustos th, table.tabla-gustos td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Línea divisoria muy fina */
+        }
+
+        table.tabla-gustos th {
+            color: #FFFFFF;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        table.tabla-gustos tr:last-child td {
+            border-bottom: none; /* Quitar línea en la última fila */
+        }
+
+        /* --- Estilo Específico para el Bloque "Susurros" (Alineado a la derecha, itálica) --- */
+        
+        #bloque6.susurros {
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic; /* Gesto artístico de diario personal */
+        }
+        
+        #bloque6.susurros h2.titulo-seccion {
+            text-align: center;
+        }
+
+        /* --- Botón de Acción Estilizado (Copiado de index.html) --- */
+        
+        .boton-continuar {
+            position: fixed;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            background-color: skyblue;
+            color: black;
+            text-decoration: none;
+            border-radius: 999px;
+            font-size: 28px;
+            font-weight: bold;
+            opacity: 0;
+            pointer-events: none;
+            filter: brightness(0.9) saturate(0.9);
+            box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
+            transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; 
+        }
+
+        body.continuar-visible .boton-continuar {
+            opacity: 0.78;
+            pointer-events: auto;
+        }
+
+        .boton-continuar:hover {
+            opacity: 1;
+            filter: brightness(1.12) saturate(1.08);
+            box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+            transform: translateY(calc(-50% - 1px));
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="titulo-web">El Mapa de mi Regreso </h1>
+        <nav class="menu-vertical">
+            <ul>
+                <li><a href="index.html">El Umbral </a></li>
+                <li><a href="huellas.html" class="active">Huellas </a></li>
+                <li><a href="vinculos-entrada.html">Vínculos </a></li>
+                <li><a href="fe-rito.html">Fe y rito </a></li>
+                <li><a href="partitura.html">La Partitura </a></li>
+                <li><a href="agradecimiento.html">Agradecimiento </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="contenido-bloques">
+
+        <section id="bloque1" class="bloque-narrativo">
+            <h1 class="titulo-seccion">Fragmentos de mi mundo</h1>
+            <p class="texto-narrativo">
+                Una vida no se compone de una sola cosa. Se va formando con las <span class="resalte-palabra">experiencias</span>, las <span class="resalte-palabra">personas</span> que nos rodean, las cosas que amamos y también con los <span class="resalte-palabra">desafíos</span> que nos obligan a crecer.<br><br>
+                Con el tiempo descubrí que muchas de las piezas que formaron mi carácter nacieron en lugares inesperados: en problemas difíciles, en <span class="resalte-palabra">preguntas sin respuesta</span> y en la necesidad de entender cómo funcionan las cosas.<br><br>
+                Estas son algunas de las <span class="resalte-palabra">huellas</span> que fueron dando forma a mi mapa.
+            </p>
+        </section>
+
+        <section id="bloque2" class="bloque-narrativo">
+            <h2 class="titulo-seccion">La lógica y el detalle</h2>
+            <p class="texto-narrativo">
+                Trabajar con electrónica siempre me dio la sensación de estar resolviendo un <span class="resalte-palabra">rompecabezas</span>. Cuando algo no funciona o todavía no encaja, mi mente empieza a girar alrededor del problema hasta encontrar la forma de entenderlo. Con el tiempo descubrí que esa forma de pensar no pertenece solo al trabajo: también dice mucho de cómo soy.<br><br>
+                Me cuesta dar algo por terminado si siento que todavía puede mejorar. Cuando aparece algo difícil o desconocido, en lugar de retroceder se despierta mi <span class="resalte-palabra">curiosidad</span>: investigar, probar, equivocarme y volver a intentar forma parte natural del proceso. Por eso muchas veces pienso mi trabajo como el de una <span class="resalte-palabra">ingeniera de rompecabezas</span>, alguien que intenta comprender cómo encajan las piezas hasta que todo encuentra su lugar. Y más allá de lo técnico, hay algo que valoro profundamente: la <span class="resalte-palabra">confianza</span>.
+            </p>
+        </section>
+
+        <section id="bloque4" class="bloque-narrativo">
+            <h2 class="titulo-seccion">Fragmentos que me habitan</h2>
+            <p class="texto-narrativo">
+                Pero una vida no se forma solo con el trabajo o los desafíos.
+                También está hecha de las pequeñas cosas que nos acompañan, de los lugares donde encontramos calma y de las historias que se quedan viviendo con nosotros.<br><br>
+            </p>
+        </section>
+
+        <section id="bloque5" class="bloque-narrativo">
+            <p class="texto-narrativo">
+                Estas son algunas de las piezas más cotidianas de mi mapa.
+            </p>
+
+            <table class="tabla-gustos" border="0">
+                <thead>
+                    <tr>
+                        <th>Fragmento</th>
+                        <th>Qué representa para mí</th>
+                        <th>Dónde vive en mi vida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ritual del Té</strong></td>
+                        <td>Un espacio de calma, atención y pausa dentro del ritmo cotidiano.</td>
+                        <td>Crear blends, explorar aromas y el ritual de la cata.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Naturaleza & Aventura</strong></td>
+                        <td>La forma más clara de reencontrar equilibrio y respirar fuera del ruido diario.</td>
+                        <td>Trekking y kayak en la montaña y los ríos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mundos Imaginarios</strong></td>
+                        <td>Historias que alimentan la imaginación y despiertan distintas emociones.</td>
+                        <td><em>Moulin Rouge</em>, <em>Laberinto</em>, <em>Code Geass</em>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Estrategia & Encuentro</strong></td>
+                        <td>Espacios para compartir tiempo humano, conversación y pensamiento estratégico.</td>
+                        <td>Boardgames y juegos de rol.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Curiosidad Teológica</strong></td>
+                        <td>El deseo de comprender cómo distintas tradiciones piensan la fe y el mundo.</td>
+                        <td>Estudio de historia y teología desde sus fuentes.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </section>
+
+        <section id="bloque6" class="bloque-narrativo susurros">
+            <h2 class="titulo-seccion">Susurros</h2>
+            <p class="texto-narrativo">
+                También había caminos que todavía no había terminado de recorrer.<br>
+                Entre ellos estaban algunos deseos muy simples:<br><br>
+                ser madre, convertirme algún día en guía de trekking, crear mi propio espacio alrededor del té y seguir aprendiendo idiomas para comprender mejor el mundo.
+            </p>
+        </section>
+
+    <a href="vinculos-entrada.html" class="boton-continuar" aria-label="Continuar a Vínculos" title="Continuar a Vínculos">→</a>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const actualizarFlecha = () => {
+                const desplazamiento = window.scrollY || document.documentElement.scrollTop;
+                const altoVentana = window.innerHeight || document.documentElement.clientHeight;
+                const altoDocumento = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                const alFinal = desplazamiento + altoVentana >= altoDocumento - 24;
+
+                document.body.classList.toggle('continuar-visible', alFinal);
+            };
+
+            const bloques = document.querySelectorAll('.bloque-narrativo');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.35
+            });
+
+            bloques.forEach((bloque) => observer.observe(bloque));
+
+            actualizarFlecha();
+            window.addEventListener('scroll', actualizarFlecha, { passive: true });
+            window.addEventListener('resize', actualizarFlecha);
+        });
+    </script>
+
+</body>
+</html>

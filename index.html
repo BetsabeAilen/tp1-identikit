@@ -1,33 +1,176 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Betsabe Ailen Rodriguez</title>
-    <link rel="stylesheet" href="design.css">
+    <title>El Mapa de mi Regreso - El Umbral</title>
+    <style>
+        /* --- Estilos Básicos Basados en el PDF Resumen --- */
+        
+        body {
+            /* Estética sobria con fondo de arena oscura y texto blanco suave [cite: 555] */
+            background-color: #1A1A1A; 
+            background-image: linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)), url("img/fondo-arena.png"); /* Mismo fondo que index.html pero más difuso [cite: 555] */
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            color: #F5F5F5;
+            /* Tipografía Serif para el cuerpo [cite: 555] */
+            font-family: serif; 
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            /* Efecto de aparición suave al cargar [cite: 561] */
+            animation: fadeInAnimation 3s;
+        }
+
+        /* Definición de la animación fade-in [cite: 561] */
+        @keyframes fadeInAnimation {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Maquetación del Encabezado (Header) --- */
+        
+        header {
+            /* overflow: hidden para contener los elementos con float  */
+            overflow: hidden; 
+            padding: 20px 40px;
+        }
+
+        .titulo-web {
+            /* Título de la web en el extremo superior izquierdo  */
+            float: left;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* --- Menú de Navegación Vertical Minimalista --- */
+        
+        nav.menu-vertical {
+            /* Menú desplegado en el extremo derecho  */
+            float: right; 
+        }
+
+        nav.menu-vertical ul {
+            /* Estructurado como una lista sin puntos  */
+            list-style-type: none; 
+            margin: 0;
+            padding: 0;
+            /* Alineación del texto a la derecha dentro del menú vertical */
+            text-align: right; 
+        }
+
+        nav.menu-vertical li {
+            margin-bottom: 8px; /* Espaciado entre opciones */
+        }
+
+        nav.menu-vertical a {
+            /* Enlaces en color blanco para suavidad visual y sin subrayado [cite: 555, 557] */
+            color: #F5F5F5; 
+            text-decoration: none; 
+            font-size: 16px;
+            transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
+            opacity: 0.62;
+            text-shadow: none;
+        }
+
+        nav.menu-vertical a:hover,
+        nav.menu-vertical a.active {
+            color: #FFFFFF;
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+        }
+
+        /* --- Contenido Principal Centrado --- */
+        
+        main.contenido-centrado {
+            /* Contenido principal alineado al medio como punto focal  */
+            text-align: center; 
+            /* Posicionamiento estático con márgenes para centrado vertical visual */
+            margin-top: 60px; 
+            padding: 0 20px;
+        }
+
+        h1.frase-potente {
+            /* Frase potente en tipografía Serif blanca [cite: 555, 558] */
+            font-size: 3.15em;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            font-weight: normal; /* Para un aspecto más sobrio y reflexivo [cite: 554] */
+        }
+
+        .resalte-palabra {
+            color: #FFFFFF;
+            font-weight: 600;
+            text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+        }
+
+        h2.subfrase {
+            /* Subfrase con matiz personal  */
+            font-size: 1.2em;
+            margin-bottom: 100px;
+            color: #CCCCCC; /* Un gris más suave */
+        }
+
+        /* --- Botón de Acción Estilizado --- */
+        
+        .boton-comenzar {
+            /* Enlace estilizado como botón con esquinas redondeadas y fondo celeste suave  */
+            display: inline-block; 
+            margin-top: 4px;
+            padding: 10px 30px;
+            background-color: skyblue; 
+            color: black; /* Texto oscuro para contraste */
+            text-decoration: none; 
+            border-radius: 12px; 
+            font-size: 18px;
+            opacity: 0.78;
+            filter: brightness(0.9) saturate(0.9);
+            box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
+            /* Transición suave para la interacción (hover) */
+            transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; 
+        }
+
+        .boton-comenzar:hover {
+            opacity: 1;
+            filter: brightness(1.12) saturate(1.08);
+            box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+            transform: translateY(-1px);
+        }
+
+    </style>
 </head>
+<body>
 
-<body class="index-bg">
+    <audio id="musicaFondo" autoplay loop>
+        <source src="audio/wagner-symphony.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
 
-<section class="header">
-    BETSABE AILEN RODRIGUEZ
-</section>
+    <header>
+        <h1 class="titulo-web">El Mapa de mi Regreso </h1>
+        <nav class="menu-vertical">
+            <ul>
+                <li><a href="index.html" class="active">El Umbral </a></li>
+                <li><a href="huellas.html">Huellas </a></li>
+                <li><a href="vinculos-entrada.html">Vínculos </a></li>
+                <li><a href="fe-rito.html">Fe y rito </a></li>
+                <li><a href="partitura.html">La Partitura </a></li>
+                <li><a href="agradecimiento.html">Agradecimiento </a></li>
+            </ul>
+        </nav>
+    </header>
 
-<section class="hero">
-
-    <h1 class="titulo">
-        BIENVENIDOS <br>
-        A MI MUNDO
-    </h1>
-
-    <img src="images/estrella.png" class="icono">
-
-    <div class="boton">
-        <a href="about.html">Te invito a conocerme</a>
-    </div>
-
-</section>
+    <main class="contenido-centrado">
+        <h1 class="frase-potente"><span class="resalte-palabra">Morir</span> no es el <span class="resalte-palabra">final</span> de una vida.<br>Es el final de una <span class="resalte-palabra">historia vivida</span>.</h1>
+        <h2 class="subfrase">Este es el mapa de algunos fragmentos de la <span class="resalte-palabra">mía</span>.</h2>
+        
+        <a href="huellas.html" class="boton-comenzar" onclick="document.getElementById('musicaFondo').play()">
+            Comenzar el recorrido 
+        </a>
+    </main>
 
 </body>
 </html>
+

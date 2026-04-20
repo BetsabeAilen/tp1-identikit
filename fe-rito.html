@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>El Mapa de mi Regreso - Fe y rito</title>
+    <style>
+        /* --- Estilos Base (Copiados de index.html para coherencia) --- */
+        
+        body {
+            /* Estética sobria con fondo de arena oscura y texto blanco suave */
+            background-color: #1A1A1A; 
+            background-image: linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)), url("img/fondo-cielo-estrellado.png"); /* Mismo fondo que index.html pero más difuso */
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            color: #F5F5F5;
+            /* Tipografía Serif para el cuerpo */
+            font-family: serif; 
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            /* El fade-in general de la página al cargar */
+            animation: fadeInAnimation 3s;
+        }
+
+        /* Definición de la animación fade-in */
+        @keyframes fadeInAnimation {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* --- Maquetación del Encabezado (Header) --- */
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 24px;
+            padding: 20px 40px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+
+        .titulo-web {
+            /* Título de la web en el extremo superior izquierdo  */
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* --- Menú de Navegación Vertical Minimalista (Derecha) --- */
+        
+        nav.menu-vertical {
+            flex-shrink: 0;
+        }
+
+        nav.menu-vertical ul {
+            list-style-type: none; 
+            margin: 0;
+            padding: 0;
+            text-align: right; 
+        }
+
+        nav.menu-vertical li {
+            margin-bottom: 8px;
+        }
+
+        nav.menu-vertical a {
+            /* Estilos de opacidad y transiciones copiados de index.html */
+            color: #F5F5F5; 
+            text-decoration: none; 
+            font-size: 16px;
+            transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
+            opacity: 0.62;
+            text-shadow: none;
+        }
+
+        nav.menu-vertical a:hover,
+        nav.menu-vertical a.active {
+            color: #FFFFFF;
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+        }
+
+        /* --- Contenido Principal Maquetado por Bloques --- */
+        
+        main.contenido-bloques {
+            text-align: center; 
+            margin-top: 0;
+            padding: 130px 20px 120px;
+        }
+
+        /* Estilo para los Títulos de cada Bloque (h1 y h2) */
+        h1.titulo-seccion, h2.titulo-seccion {
+            font-size: 2.5em; /* Un poco más pequeño que la frase principal de index */
+            line-height: 1.2;
+            margin-bottom: 28px;
+            font-weight: normal;
+            color: #FFFFFF;
+        }
+
+        h2.titulo-seccion {
+            font-size: 2.1em;
+            margin-top: 50px; /* Espacio antes de cada h2 */
+        }
+
+        /* Clase para el resalte de palabras (copiado de index) */
+        .resalte-palabra {
+            color: #FFFFFF;
+            font-weight: 600;
+            text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+        }
+
+        /* Estilo para los párrafos de texto narrativo */
+        p.texto-narrativo {
+            font-size: 1.15em;
+            line-height: 1.6;
+            color: #CCCCCC;
+            max-width: 800px; /* Limita el ancho para lectura cómoda */
+            margin: 0 auto 12px auto; /* Centrado horizontal */
+            text-align: center; /* Texto centrado */
+        }
+
+        .lista-ritos {
+            width: min(820px, 92vw);
+            margin: 0 auto;
+            padding: 0;
+            list-style: none;
+            text-align: left;
+        }
+
+        .lista-ritos li {
+            padding: 14px 0;
+            color: #CCCCCC;
+            font-size: 1.05em;
+            line-height: 1.65;
+        }
+
+        .lista-ritos li + li {
+            border-top: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .lista-ritos .titulo-rito {
+            display: block;
+            margin-bottom: 8px;
+            color: #FFFFFF;
+            font-weight: 600;
+            text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+        }
+
+        /* Contenedor genérico para cada bloque con flecha */
+        .bloque-narrativo {
+            min-height: calc(100vh - 150px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0; /* Cada bloque ocupa su propia pantalla */
+            padding: 20px 0;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .bloque-narrativo.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Requisito 2: Estilos para la Tabla de Gustos (Minimalista) --- */
+        
+        table.tabla-gustos {
+            border-collapse: collapse;
+            width: 82%;
+            max-width: 760px;
+            margin: 36px auto;
+            text-align: left;
+            font-size: 0.92em;
+            color: #CCCCCC;
+            background-color: rgba(255, 255, 255, 0.03); /* Fondo muy tenue */
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table.tabla-gustos th, table.tabla-gustos td {
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Línea divisoria muy fina */
+        }
+
+        table.tabla-gustos th {
+            color: #FFFFFF;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+        
+        table.tabla-gustos tr:last-child td {
+            border-bottom: none; /* Quitar línea en la última fila */
+        }
+
+        /* --- Estilo Específico para el Bloque "Susurros" (Alineado a la derecha, itálica) --- */
+        
+        #bloque6.susurros {
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            font-style: italic; /* Gesto artístico de diario personal */
+        }
+        
+        #bloque6.susurros h2.titulo-seccion {
+            text-align: center;
+        }
+
+        /* --- Botón de Acción Estilizado (Copiado de index.html) --- */
+        
+        .boton-continuar {
+            position: fixed;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 54px;
+            height: 54px;
+            background-color: skyblue;
+            color: black;
+            text-decoration: none;
+            border-radius: 999px;
+            font-size: 28px;
+            font-weight: bold;
+            opacity: 0;
+            pointer-events: none;
+            filter: brightness(0.9) saturate(0.9);
+            box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
+            transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; 
+        }
+
+        body.continuar-visible .boton-continuar {
+            opacity: 0.78;
+            pointer-events: auto;
+        }
+
+        .boton-continuar:hover {
+            opacity: 1;
+            filter: brightness(1.12) saturate(1.08);
+            box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+            transform: translateY(calc(-50% - 1px));
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 class="titulo-web">El Mapa de mi Regreso </h1>
+        <nav class="menu-vertical">
+            <ul>
+                <li><a href="index.html">El Umbral </a></li>
+                <li><a href="huellas.html">Huellas </a></li>
+                <li><a href="vinculos-entrada.html">Vínculos </a></li>
+                <li><a href="fe-rito.html" class="active">Fe y rito </a></li>
+                <li><a href="partitura.html">La Partitura </a></li>
+                <li><a href="agradecimiento.html">Agradecimiento </a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="contenido-bloques">
+
+        <section id="bloque1" class="bloque-narrativo">
+            <h1 class="titulo-seccion" style="font-size: 3.15em;">Inna lillahi wa inna ilayhi raji'un<br>(انا لله وانا اليه راجعون)</h1>
+            <p class="texto-narrativo">
+                Ciertamente, a <span class="resalte-palabra">Alá</span> <span class="resalte-palabra">pertenecemos</span><br>
+                y a Él <span class="resalte-palabra">regresaremos</span>.<br><br>
+                Toda vida comienza con un <span class="resalte-palabra">origen</span> y termina con un <span class="resalte-palabra">regreso</span>.
+            </p>
+        </section>
+
+        <section id="bloque2" class="bloque-narrativo">
+            <h2 class="titulo-seccion">Mi relación con Dios</h2>
+            <p class="texto-narrativo">
+                La fe que fue cambiando conmigo.<br><br>
+                Hay otro aspecto muy importante en mi vida que también forma parte de quien soy: <span class="resalte-palabra">mi fe</span>.<br><br>
+                <span class="resalte-palabra">Dios</span> ha estado presente en mi vida desde que tengo memoria, aunque la forma en que lo entendí fue <span class="resalte-palabra">cambiando con los años</span>.
+            </p>
+        </section>
+
+        <section id="bloque3" class="bloque-narrativo">
+            <h2 class="titulo-seccion">La infancia</h2>
+            <p class="texto-narrativo">
+                Cuando era niña, Dios era casi como <span class="resalte-palabra">un amigo</span>. Era alguien en quien apoyarme, alguien que escuchaba cuando hablaba en silencio, alguien que me ofrecía un <span class="resalte-palabra">lugar seguro</span> donde llorar o pedir ayuda. Lo sentía como una <span class="resalte-palabra">presencia cercana</span>, un compañero invisible al que podía confiarle todo: mis <span class="resalte-palabra">miedos</span>, mis <span class="resalte-palabra">preguntas</span>, mis <span class="resalte-palabra">dudas</span>.
+            </p>
+        </section>
+
+        <section id="bloque4" class="bloque-narrativo">
+            <h2 class="titulo-seccion">El temor</h2>
+            <p class="texto-narrativo">
+                Con el tiempo esa imagen empezó a cambiar. Comencé a verlo más como una figura de rectitud, alguien que observaba mis acciones y evaluaba si estaban bien o mal.<br><br>
+                De ahí nació algo que muchas personas conocen: el <span class="resalte-palabra">temor a Dios</span>. No un temor de terror, sino el <span class="resalte-palabra">miedo a equivocarme</span>, a hacer algo malo y perder aquella <span class="resalte-palabra">cercanía</span> que había sentido cuando era niña.
+            </p>
+        </section>
+
+        <section id="bloque5" class="bloque-narrativo">
+            <h2 class="titulo-seccion">La distancia</h2>
+            <p class="texto-narrativo">
+                Pero a medida que fui creciendo, ese temor empezó a incomodarme. Poco a poco <span class="resalte-palabra">tomé distancia</span>.<br><br>
+                No dejé de <span class="resalte-palabra">creer en Dios</span>, pero sí dejé de hacerlo parte explícita de mi vida. Era como si supiera que estaba ahí, pero evitara mirarlo directamente. Nuestra relación se volvió más <span class="resalte-palabra">silenciosa</span>, más <span class="resalte-palabra">lejana</span>.
+            </p>
+        </section>
+
+        <section id="bloque6" class="bloque-narrativo">
+            <h2 class="titulo-seccion">La contemplación</h2>
+            <p class="texto-narrativo">
+                Con los años esa relación volvió a transformarse.<br><br>
+                Empecé a contemplar el mundo de otra manera: la <span class="resalte-palabra">belleza</span> de la naturaleza, la música, los gestos de <span class="resalte-palabra">bondad</span> entre las personas... pero también la <span class="resalte-palabra">crueldad</span>, el <span class="resalte-palabra">dolor</span> y la angustia que existen en la vida humana.<br><br>
+                Todo eso empezó a aparecer ante mí como si fuera una especie de <span class="resalte-palabra">poema oscuro y hermoso</span> al mismo tiempo. Esa contemplación me hizo entender algo más profundo sobre ese "amigo" al que antes temía.<br><br>
+                Empecé a sentir <span class="resalte-palabra">admiración</span>, <span class="resalte-palabra">gratitud</span> y una forma de <span class="resalte-palabra">paz</span> frente a algo que ni siquiera me animaba a definir con claridad.
+            </p>
+        </section>
+
+        <section id="bloque7" class="bloque-narrativo">
+            <h2 class="titulo-seccion">El vacío</h2>
+            <p class="texto-narrativo">
+                Pero entonces apareció una pregunta mucho más cercana: mi propia existencia.<br><br>
+                Cuanto más observaba el mundo, más empezaba a mirar hacia adentro. Y en ese proceso descubrí algo que me inquietaba profundamente: un <span class="resalte-palabra">vacío</span>.<br><br>
+                Un vacío que había estado <span class="resalte-palabra">ignorando</span> durante mucho tiempo.<br><br>
+                En algún momento entendí que ese vacío existía porque había dejado algo fuera de mi vida. Y fue entonces cuando volví a <span class="resalte-palabra">encontrar a Dios</span>.
+            </p>
+        </section>
+
+        <section id="bloque8" class="bloque-narrativo">
+            <h2 class="titulo-seccion">El reencuentro</h2>
+            <p class="texto-narrativo">
+                Pero esta vez no como aquel amigo de la infancia, ni como una figura que me juzgaba desde arriba.<br><br>
+                Esta vez lo entendí de otra manera: como <span class="resalte-palabra">algo más grande que yo</span>, algo superior que no me atrevería a tratar simplemente como un amigo, pero que tampoco significa que no pueda apoyarme en Él.<br><br>
+                Algo a lo que <span class="resalte-palabra">agradecer</span>.<br>
+                Algo donde buscar <span class="resalte-palabra">refugio</span>.<br>
+                Algo que puede dar <span class="resalte-palabra">sentido</span> a ese vacío inexplicable.<br><br>
+                Cuando era niña, la idea de Dios como juez me asustaba. Hoy entiendo mejor la indulgencia, la misericordia y la profundidad del amor que puede existir en esa relación.<br><br>
+                Aceptar a Dios en mi vida significa aceptar que hay algo que <span class="resalte-palabra">me conoce más profundamente</span> que nadie. Algo que sabe lo que me falta, lo que necesito y lo que llevo dentro. Algo que conoce mi historia incluso mejor que yo misma.<br><br>
+                Y curiosamente, esa idea ya no me da miedo.<br><br>
+                <span class="resalte-palabra">Me da paz</span>.
+            </p>
+        </section>
+
+        <section id="bloque9" class="bloque-narrativo">
+            <h2 class="titulo-seccion">El regreso</h2>
+            <p class="texto-narrativo">
+                La muerte no es una tragedia en sí misma. Para un creyente es el momento en que el <span class="resalte-palabra">alma</span> <span class="resalte-palabra">vuelve a su origen</span>.<br><br>
+                Durante la vida intentamos comprender. Fallamos, aprendemos, nos equivocamos y volvemos a intentar. Nadie llega perfecto.<br><br>
+                Solo espero haber llegado con <span class="resalte-palabra">dignidad</span>.<br><br>
+                Si algo deseo para ese momento es sencillez, oración y gratitud.
+            </p>
+        </section>
+
+        <section id="bloque10" class="bloque-narrativo">
+            <h2 class="titulo-seccion">Mi despedida</h2>
+            <p class="texto-narrativo">
+                Me gustaría que mi despedida sea <span class="resalte-palabra">simple</span>. Sin <span class="resalte-palabra">lujos</span> ni <span class="resalte-palabra">ostentación</span>, de una manera que recuerde algo fundamental: que todos somos <span class="resalte-palabra">iguales ante Dios</span>.
+            </p>
+        </section>
+
+        <section id="bloque11" class="bloque-narrativo">
+            <h2 class="titulo-seccion">Ritos funerarios</h2>
+            <ul class="lista-ritos">
+                <li>
+                    <span class="titulo-rito">Lavado ritual (Ghusl)</span>
+                    Me gustaría que mi cuerpo sea lavado de forma ritual por personas de mi mismo sexo, como dicta la tradición.
+                </li>
+                <li>
+                    <span class="titulo-rito">Sudario (Kafan)</span>
+                    Me gustaría ser envuelta en telas blancas simples. Si alguien necesita verme, un vestido sencillo de lino suave sería suficiente.
+                </li>
+                <li>
+                    <span class="titulo-rito">Oración funeraria (Salat al-Janazah)</span>
+                    Lo más importante que pueden hacer por mí no es recordarme, sino rezar por el perdón de Dios y su misericordia.
+                </li>
+            </ul>
+        </section>
+
+        <section id="bloque12" class="bloque-narrativo">
+            <h2 class="titulo-seccion">El entierro</h2>
+            <p class="texto-narrativo">
+                Si fuera posible elegir, me gustaría un entierro <span class="resalte-palabra">sencillo</span>, al aire libre, en un cementerio de parque. No quiero nichos ni estructuras de cemento; quiero <span class="resalte-palabra">volver a la tierra</span>.<br><br>
+                Sé que en Argentina no siempre es posible el entierro directo en tierra. Por eso preferiría un cajón sencillo, de madera rústica y <span class="resalte-palabra">biodegradable</span>.<br><br>
+                Nada elaborado. Solo lo necesario para regresar a donde pertenecemos.
+            </p>
+        </section>
+
+        <section id="bloque13" class="bloque-narrativo">
+            <h2 class="titulo-seccion">Conclusión</h2>
+            <p class="texto-narrativo">
+                Quizás al final de la vida no se trate de haber entendido todo,<br>
+                sino de haber intentado vivir con <span class="resalte-palabra">sinceridad</span>.<br><br>
+                Haber buscado <span class="resalte-palabra">el bien</span> incluso cuando era difícil.<br>
+                Haber aprendido de los <span class="resalte-palabra">errores</span>.<br>
+                Haber amado <span class="resalte-palabra">lo que se nos fue dado</span>.<br><br>
+                Si llega el momento de partir, espero hacerlo con gratitud.<br><br>
+                Porque incluso en medio de las dudas, las búsquedas y los silencios,<br>
+                siempre sentí que <span class="resalte-palabra">me sostenía</span>.<br><br>
+                Y eso, para mí, siempre fue <span class="resalte-palabra">Dios</span>.
+            </p>
+        </section>
+
+    <a href="partitura.html" class="boton-continuar" aria-label="Continuar a La Partitura" title="Continuar a La Partitura">→</a>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const actualizarFlecha = () => {
+                const desplazamiento = window.scrollY || document.documentElement.scrollTop;
+                const altoVentana = window.innerHeight || document.documentElement.clientHeight;
+                const altoDocumento = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+                const alFinal = desplazamiento + altoVentana >= altoDocumento - 24;
+
+                document.body.classList.toggle('continuar-visible', alFinal);
+            };
+
+            const bloques = document.querySelectorAll('.bloque-narrativo');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.35
+            });
+
+            bloques.forEach((bloque) => observer.observe(bloque));
+
+            actualizarFlecha();
+            window.addEventListener('scroll', actualizarFlecha, { passive: true });
+            window.addEventListener('resize', actualizarFlecha);
+        });
+    </script>
+
+</body>
+</html>
+

@@ -1,0 +1,449 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>El Mapa de mi Regreso - La Partitura</title>
+	<style>
+		body {
+			background-color: #1A1A1A;
+			background-image: linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)), url("img/fondo-arena.png");
+			background-size: 100% auto;
+			background-position: top center;
+			background-repeat: no-repeat;
+			background-attachment: scroll;
+			color: #F5F5F5;
+			font-family: serif;
+			margin: 0;
+			padding: 0;
+			min-height: 100vh;
+			animation: fadeInAnimation 3s;
+		}
+
+		@keyframes fadeInAnimation {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		header {
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			gap: 24px;
+			padding: 20px 40px;
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: 1000;
+			box-sizing: border-box;
+		}
+
+		.titulo-web {
+			font-size: 24px;
+			margin: 0;
+		}
+
+		nav.menu-vertical ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			text-align: right;
+		}
+
+		nav.menu-vertical li {
+			margin-bottom: 8px;
+		}
+
+		nav.menu-vertical a {
+			color: #F5F5F5;
+			text-decoration: none;
+			font-size: 16px;
+			transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
+			opacity: 0.62;
+			text-shadow: none;
+		}
+
+		nav.menu-vertical a:hover,
+		nav.menu-vertical a.active {
+			color: #FFFFFF;
+			opacity: 1;
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+		}
+
+		.boton-flecha {
+			position: fixed;
+			right: 22px;
+			top: 50%;
+			transform: translateY(-50%);
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 54px;
+			height: 54px;
+			background-color: skyblue;
+			color: black;
+			text-decoration: none;
+			border-radius: 999px;
+			font-size: 28px;
+			font-weight: bold;
+			opacity: 0.78;
+			filter: brightness(0.9) saturate(0.9);
+			box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
+			transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+			z-index: 50;
+		}
+
+		.boton-flecha:hover {
+			opacity: 1;
+			filter: brightness(1.12) saturate(1.08);
+			box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+			transform: translateY(calc(-50% - 1px));
+		}
+
+		main.contenido-seccion {
+			text-align: center;
+			margin-top: 0;
+			padding: 130px 20px 40px;
+		}
+
+		.bloque-narrativo {
+			min-height: calc(100vh - 150px);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			padding: 20px 0;
+			box-sizing: border-box;
+		}
+
+		h1.titulo-seccion {
+			font-size: 3.15em;
+			line-height: 1.2;
+			font-weight: normal;
+			margin: 0 0 28px;
+			color: #FFFFFF;
+		}
+
+		.entrada-texto {
+			font-size: 1.18em;
+			line-height: 1.6;
+			color: #D5D5D5;
+			max-width: 820px;
+			margin: 0 auto;
+		}
+
+		h2.titulo-bloque {
+			font-size: 2.1em;
+			font-weight: normal;
+			margin: 0 0 24px;
+			color: #FFFFFF;
+		}
+
+		.tabla-partitura {
+			width: min(980px, 86vw);
+			border-collapse: collapse;
+			margin: 0 auto 20px;
+			background: rgba(255, 255, 255, 0.03);
+			border-radius: 10px;
+			overflow: hidden;
+		}
+
+		.tabla-partitura thead th {
+			padding: 14px 16px;
+			text-align: left;
+			font-size: 0.85em;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: #ffffff;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+		}
+
+		.tabla-partitura th,
+		.tabla-partitura td {
+			border-left: none;
+			border-right: none;
+		}
+
+		.tabla-partitura tbody td {
+			padding: 16px;
+			vertical-align: top;
+			color: #dcd8cf;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+		}
+
+		.tabla-partitura tbody tr:last-child td {
+			border-bottom: none;
+		}
+
+		.tabla-partitura tbody tr {
+			cursor: pointer;
+			transition: background-color 0.25s ease;
+		}
+
+		.tabla-partitura tbody tr:hover {
+			background: rgba(255, 255, 255, 0.06);
+		}
+
+		.tabla-partitura tbody tr.activa {
+			background: rgba(185, 216, 255, 0.12);
+		}
+
+		.tabla-partitura .cancion {
+			font-size: 1.05em;
+			color: #FFFFFF;
+			margin: 0 0 4px;
+		}
+
+		.tabla-partitura .artista {
+			font-size: 0.95em;
+			color: #c7c2b7;
+			margin: 0;
+		}
+
+		.tabla-partitura .descripcion {
+			margin: 0;
+			line-height: 1.65;
+			color: #d8d4cb;
+			text-align: left;
+		}
+
+		.reproductor-principal {
+			position: sticky;
+			bottom: 14px;
+			z-index: 30;
+			width: min(980px, 86vw);
+			margin: 0 auto 36px;
+			padding: 16px;
+			border-radius: 12px;
+			background: rgba(12, 12, 16, 0.9);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+			gap: 16px;
+			align-items: center;
+		}
+
+		.reproductor-info {
+			text-align: left;
+		}
+
+		.reproductor-etiqueta {
+			font-size: 0.78em;
+			text-transform: uppercase;
+			letter-spacing: 0.12em;
+			color: #9fa7b6;
+		}
+
+		.reproductor-titulo {
+			font-size: 1.08em;
+			color: #ffffff;
+			margin: 0;
+		}
+
+		.reproductor-artista {
+			font-size: 0.95em;
+			color: #b8b1a3;
+			margin: 3px 0 0;
+		}
+
+		.reproductor-texto {
+			color: #d6d1c7;
+			font-size: 0.93em;
+			line-height: 1.5;
+			margin: 8px 0 0;
+		}
+
+		.reproductor-audio audio {
+			width: 100%;
+			display: block;
+		}
+
+		@media (max-width: 900px) {
+			header {
+				padding: 18px 18px;
+				flex-direction: column;
+				gap: 14px;
+			}
+
+			main.contenido-seccion {
+				padding-top: 168px;
+			}
+
+			h1.titulo-seccion {
+				font-size: 2.55em;
+			}
+
+			.entrada-texto {
+				font-size: 1.04em;
+			}
+
+			.tabla-partitura {
+				width: min(980px, 94vw);
+			}
+
+			.tabla-partitura thead {
+				display: none;
+			}
+
+			.tabla-partitura,
+			.tabla-partitura tbody,
+			.tabla-partitura tr,
+			.tabla-partitura td {
+				display: block;
+				width: 100%;
+			}
+
+			.tabla-partitura tbody tr {
+				margin-bottom: 14px;
+				border-radius: 10px;
+				overflow: hidden;
+			}
+
+			.tabla-partitura tbody td {
+				padding: 12px;
+				border-bottom: none;
+			}
+
+			.reproductor-principal {
+				width: min(980px, 94vw);
+				grid-template-columns: 1fr;
+				padding: 14px;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<header>
+		<h1 class="titulo-web">El Mapa de mi Regreso </h1>
+		<nav class="menu-vertical">
+			<ul>
+				<li><a href="index.html">El Umbral </a></li>
+				<li><a href="huellas.html">Huellas </a></li>
+				<li><a href="vinculos-entrada.html">Vínculos </a></li>
+				<li><a href="fe-rito.html">Fe y rito </a></li>
+				<li><a href="partitura.html" class="active">La Partitura </a></li>
+				<li><a href="agradecimiento.html">Agradecimiento </a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main class="contenido-seccion">
+		<section class="bloque-narrativo hero-partitura">
+			<h1 class="titulo-seccion">La Partitura</h1>
+			<p class="entrada-texto">
+				A lo largo de mi vida hubo artistas y canciones que aparecieron en distintos momentos, acompañando alegrías, preguntas, luchas y silencios.<br><br>
+				Cada una de estas canciones guarda una pequeña parte de mi historia. Y si alguna vez esta historia llega a su último capítulo, me gustaría que estas mismas voces también me acompañen al final del camino.
+			</p>
+		</section>
+
+		<section class="bloque-narrativo seleccion-partituras" aria-label="Canciones que componen mi historia">
+			<h2 class="titulo-bloque">Canciones</h2>
+			<table class="tabla-partitura">
+				<thead>
+					<tr>
+						<th>Canción</th>
+						<th>Que representa para mí</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="fila-cancion activa" data-audio="audio/david-bowie-life-on-mars.mp3" data-title="Life on Mars?" data-artist="David Bowie" data-summary="Siempre sentí que esta canción habla de esa sensación de mirar el mundo y no terminar de entenderlo del todo." tabindex="0">
+						<td>
+							<p class="cancion">Life on Mars?</p>
+							<p class="artista">David Bowie</p>
+						</td>
+						<td><p class="descripcion">Siempre sentí que Life on Mars? habla de esa sensación de mirar el mundo y no terminar de entenderlo del todo. A veces la realidad parece un espectáculo extraño que se repite una y otra vez, lleno de ruido, imágenes y contradicciones. En medio de todo eso aparece una pregunta simple: si existe algo distinto, algo más verdadero detrás de lo que vemos. Para mí esta canción representa esa parte curiosa y observadora con la que muchas veces intento comprender el mundo.</p></td>
+					</tr>
+					<tr class="fila-cancion" data-audio="audio/david-bowie-starman.mp3" data-title="Starman" data-artist="David Bowie" data-summary="Si Life on Mars? es la pregunta, Starman siempre me pareció una respuesta llena de esperanza." tabindex="0">
+						<td>
+							<p class="cancion">Starman</p>
+							<p class="artista">David Bowie</p>
+						</td>
+						<td><p class="descripcion">Si Life on Mars? es la pregunta, Starman siempre me pareció una respuesta llena de esperanza. Habla de una voz que llega desde algún lugar lejano y nos recuerda que la vida puede ser más grande de lo que imaginamos. Es una invitación a no perder la curiosidad, a no apagar la imaginación y a permitir que la alegría siga existiendo. Para mí esta canción representa la parte luminosa de la vida: la sensación de que todavía hay algo hermoso esperando ser descubierto.</p></td>
+					</tr>
+					<tr class="fila-cancion" data-audio="audio/wonderful-life-black.mp3" data-title="Wonderful Life" data-artist="Black" data-summary="Wonderful Life siempre me recordó que la vida no necesita ser perfecta para ser valiosa." tabindex="0">
+						<td>
+							<p class="cancion">Wonderful Life</p>
+							<p class="artista">Black</p>
+						</td>
+						<td><p class="descripcion">Wonderful Life siempre me recordó que la vida no necesita ser perfecta para ser valiosa. Hay algo profundamente humano en esa mezcla de melancolía y belleza que atraviesa la canción. A veces la vida se siente difícil, a veces parece repetirse o volverse pesada, pero aun así conserva pequeños momentos que la hacen digna de ser vivida. Para mí esta canción representa esa conciencia tranquila de que incluso una vida imperfecta puede ser, de alguna manera, una vida hermosa.</p></td>
+					</tr>
+					<tr class="fila-cancion" data-audio="audio/tokio-hotel-behind.mp3" data-title="World Behind My Wall" data-artist="Tokio Hotel" data-summary="Esta canción siempre me hizo pensar en el mundo interior que cada persona lleva consigo." tabindex="0">
+						<td>
+							<p class="cancion">World Behind My Wall</p>
+							<p class="artista">Tokio Hotel</p>
+						</td>
+						<td><p class="descripcion">Esta canción siempre me hizo pensar en el mundo interior que cada persona lleva consigo. Todos construimos, en algún momento, una especie de muro invisible: una forma de proteger lo que sentimos o lo que pensamos cuando no sabemos cómo mostrarlo al resto del mundo. Pero también habla del deseo de atravesar ese muro, de encontrar un lugar donde uno pueda ser visto y comprendido. En mi historia, esta canción representa ese espacio interno que muchas veces permanece en silencio, pero que también forma parte de lo que soy.</p></td>
+					</tr>
+					<tr class="fila-cancion" data-audio="audio/david-bowie-lazarus.mp3" data-title="Lazarus" data-artist="David Bowie" data-summary="Lazarus tiene algo profundamente sereno. Bowie la escribió sabiendo que estaba cerca del final." tabindex="0">
+						<td>
+							<p class="cancion">Lazarus</p>
+							<p class="artista">David Bowie</p>
+						</td>
+						<td><p class="descripcion">Lazarus tiene algo profundamente sereno. Bowie la escribió sabiendo que estaba cerca del final, y aun así no suena a derrota. Al contrario, parece una despedida consciente, casi tranquila. Reconoce las cicatrices de la vida, los errores y el peso del camino recorrido, pero también deja una sensación de libertad. Como si al final de la historia quedara algo más liviano que el miedo: la aceptación de haber vivido.</p></td>
+					</tr>
+					<tr class="fila-cancion" data-audio="audio/pedro-infante-dios-nunca-muere.mp3" data-title="Dios Nunca Muere" data-artist="Pedro Infante" data-summary="Esta canción tiene algo profundamente sereno. No habla de la muerte como un final absoluto." tabindex="0">
+						<td>
+							<p class="cancion">Dios Nunca Muere</p>
+							<p class="artista">Pedro Infante</p>
+						</td>
+						<td><p class="descripcion">Esta canción tiene algo profundamente sereno. No habla de la muerte como un final absoluto, sino como una despedida que se llena de memoria, de respeto y de continuidad. Siempre me hizo pensar que una vida no desaparece del todo mientras haya personas que la recuerden, que recen por ella o que sigan caminando con algo de lo que dejó. Por eso me gusta imaginar que esta música podría acompañar el cierre de mi historia, no como un final triste, sino como una despedida llena de dignidad y de gratitud por la vida vivida.</p></td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+	</main>
+
+	<section id="reproductor-principal" class="reproductor-principal" aria-label="Reproductor principal">
+		<div class="reproductor-info">
+			<div class="reproductor-etiqueta">Reproduciendo</div>
+			<h2 class="reproductor-titulo" id="trackTitle">Life on Mars?</h2>
+			<p class="reproductor-artista" id="trackArtist">David Bowie</p>
+			<p class="reproductor-texto" id="trackSummary">Siempre sentí que esta canción habla de esa sensación de mirar el mundo y no terminar de entenderlo del todo.</p>
+		</div>
+		<div class="reproductor-audio">
+			<audio id="audioPlayer" controls preload="none" src="audio/david-bowie-life-on-mars.mp3"></audio>
+		</div>
+	</section>
+
+	<a href="agradecimiento.html" class="boton-flecha" aria-label="Continuar a Agradecimiento" title="Continuar a Agradecimiento">→</a>
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const rows = Array.from(document.querySelectorAll('.fila-cancion'));
+			const player = document.getElementById('audioPlayer');
+			const title = document.getElementById('trackTitle');
+			const artist = document.getElementById('trackArtist');
+			const summary = document.getElementById('trackSummary');
+
+			const playRow = (row) => {
+				rows.forEach((item) => item.classList.remove('activa'));
+				row.classList.add('activa');
+				title.textContent = row.dataset.title;
+				artist.textContent = row.dataset.artist;
+				summary.textContent = row.dataset.summary;
+				player.pause();
+				player.currentTime = 0;
+				if (player.src !== new URL(row.dataset.audio, window.location.href).href) {
+					player.src = row.dataset.audio;
+				}
+				player.play().catch(() => {});
+			};
+
+			rows.forEach((row) => {
+				row.addEventListener('click', () => playRow(row));
+				row.addEventListener('keydown', (event) => {
+					if (event.key === 'Enter' || event.key === ' ') {
+						event.preventDefault();
+						playRow(row);
+					}
+				});
+			});
+		});
+	</script>
+
+</body>
+</html>
+
+

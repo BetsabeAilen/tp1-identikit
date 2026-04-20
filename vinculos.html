@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>El Mapa de mi Regreso - Vinculos</title>
+	<style>
+		body {
+			background-color: #1A1A1A;
+			background-image: url("img/arena-objetos.png");
+			background-size: 100% auto;
+			background-position: top center;
+			background-repeat: no-repeat;
+			background-attachment: scroll;
+			min-height: 100vh;
+			color: #F5F5F5;
+			font-family: serif;
+			margin: 0;
+			padding: 0;
+			animation: fadeInAnimation 3s;
+		}
+
+		@keyframes fadeInAnimation {
+			from { opacity: 0; }
+			to { opacity: 1; }
+		}
+
+		header {
+			overflow: hidden;
+			padding: 20px 40px;
+		}
+
+		.titulo-web {
+			float: left;
+			font-size: 24px;
+			margin: 0;
+		}
+
+		nav.menu-vertical {
+			float: right;
+		}
+
+		nav.menu-vertical ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			text-align: right;
+		}
+
+		nav.menu-vertical li {
+			margin-bottom: 8px;
+		}
+
+		nav.menu-vertical a {
+			color: #F5F5F5;
+			text-decoration: none;
+			font-size: 16px;
+			transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
+			opacity: 0.62;
+			text-shadow: none;
+		}
+
+		nav.menu-vertical a:hover,
+		nav.menu-vertical a.active {
+			color: #FFFFFF;
+			opacity: 1;
+			text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+		}
+
+		main.contenido-seccion {
+			text-align: center;
+			padding-bottom: 35px;
+		}
+
+		p.descripcion-seccion {
+			font-size: 1.18em;
+			color: #D5D5D5;
+			max-width: 820px;
+			margin: 0 auto 24px auto;
+			line-height: 1.6;
+		}
+
+		.boton-continuar {
+			position: fixed;
+			right: 22px;
+			top: 50%;
+			transform: translateY(-50%);
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 54px;
+			height: 54px;
+			background-color: skyblue;
+			color: black;
+			text-decoration: none;
+			border-radius: 999px;
+			font-size: 28px;
+			font-weight: bold;
+			opacity: 0.78;
+			filter: brightness(0.9) saturate(0.9);
+			box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
+			transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+		}
+
+		.boton-continuar:hover {
+			opacity: 1;
+			filter: brightness(1.12) saturate(1.08);
+			box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+			transform: translateY(calc(-50% - 1px));
+		}
+
+		.lista-vinculos {
+			position: relative;
+			width: min(1200px, 94vw);
+			height: clamp(420px, 62vh, 760px);
+			margin: 0 auto 52px auto;
+		}
+
+		.boton-vinculo {
+			position: absolute;
+			transform: translate(-50%, -50%);
+			display: inline-block;
+			padding: 10px 18px;
+			border-radius: 999px;
+			text-decoration: none;
+			color: #F5F5F5;
+			border: 1px solid rgba(245, 245, 245, 0.28);
+			background: rgba(255, 255, 255, 0.05);
+			opacity: 0.85;
+			transition: opacity 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+		}
+
+		.boton-vinculo:hover {
+			opacity: 1;
+			background: rgba(255, 255, 255, 0.12);
+			transform: translate(-50%, calc(-50% - 1px));
+		}
+
+		@media (max-width: 900px) {
+			.lista-vinculos {
+				height: auto;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 10px;
+			}
+
+			.boton-vinculo {
+				position: static;
+				transform: none;
+				text-align: center;
+			}
+
+			.boton-vinculo:hover {
+				transform: translateY(-1px);
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<header>
+		<h1 class="titulo-web">El Mapa de mi Regreso </h1>
+		<nav class="menu-vertical">
+			<ul>
+				<li><a href="index.html">El Umbral </a></li>
+				<li><a href="huellas.html">Huellas </a></li>
+				<li><a href="vinculos-entrada.html" class="active">Vinculos </a></li>
+				<li><a href="fe-rito.html">Fe y rito </a></li>
+				<li><a href="partitura.html">La Partitura </a></li>
+				<li><a href="agradecimiento.html">Agradecimiento </a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main class="contenido-seccion">
+		<div class="lista-vinculos">
+			<a href="../vinculos/mama.html" class="boton-vinculo" style="left: 20%; top: 25%;">Mi madre</a>
+			<a href="../vinculos/hermana.html" class="boton-vinculo" style="left: 78%; top: 15%;">Mi hermana</a> 
+			<a href="../vinculos/esposo.html" class="boton-vinculo" style="left: 45%; top: 75%;">Mi esposo</a>  
+			<a href="../vinculos/papa.html" class="boton-vinculo" style="left: 10%; top: 45%;">Mi padre</a>
+			<a href="../vinculos/gatos.html" class="boton-vinculo" style="left: 68%; top: 85%;">Mis bebes gatunos</a>
+			<a href="../vinculos/perros1.html" class="boton-vinculo" style="left: 14%; top: 75%;">Mis hermanos perrunos</a>
+			<a href="../vinculos/perros2.html" class="boton-vinculo" style="left: 90%; top: 80%;">Mis hijas perrunas</a>
+		</div>
+
+		<a href="fe-rito.html" class="boton-continuar" aria-label="Continuar a Fe y rito" title="Continuar a Fe y rito">→</a>
+	</main>
+
+</body>
+</html>
+
+
