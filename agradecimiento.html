@@ -118,14 +118,6 @@
             margin-bottom: 0;
             padding: 20px 0;
             box-sizing: border-box;
-            opacity: 0;
-            transform: translateY(28px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .bloque-narrativo.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         .intro-inspiracion {
@@ -313,25 +305,6 @@
             </div>
         </section>
     </main>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const bloques = document.querySelectorAll('.bloque-narrativo');
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.35
-            });
-
-            bloques.forEach((bloque) => observer.observe(bloque));
-        });
-    </script>
 
 </body>
 </html>
