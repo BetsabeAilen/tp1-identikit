@@ -1,15 +1,10 @@
-/* =============================================================
-   El Camino de Regreso — CSS global unificado
-   Organización:
-        1. Base
-        2. Layout (header, nav, main)
-        3. Tipografía
-        4. Componentes
-        5. Páginas específicas
-        6. Responsive
-   ============================================================= */
-
 @import url('https://fonts.googleapis.com/css2?family=Balthazar&family=Caveat&family=Grenze:wght@400;500&family=Noto+Sans:wght@400;600&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+    /* Overlay oscuro reutilizado sobre fondos de arena / cielo / entrada vínculos */
+    --overlay-atenuacion: linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58));
+    --resalte-brillo: 0 0 14px rgba(255, 255, 255, 0.35);
+}
 
 
 /* =============================================================
@@ -128,7 +123,7 @@ main.contenido-bloques {
 main.contenido-seccion {
     text-align: center;
     margin-top: 60px;
-    padding: 0 20px 80px 20px;
+    padding: 0 20px 80px;
 }
 
 
@@ -176,24 +171,25 @@ h2.subtitulo-especial {
 }
 
 /* ---- Párrafos ---- */
-p.texto-narrativo {
+p.texto-narrativo,
+p.entrada-texto {
     font-family: 'Noto Sans', sans-serif;
-    font-size: 1.05em;
     line-height: 1.65;
-    color: #CCCCCC;
-    max-width: 800px;
-    margin: 0 auto 12px auto;
     text-align: center;
 }
 
+p.texto-narrativo {
+    font-size: 1.05em;
+    color: #CCCCCC;
+    max-width: 800px;
+    margin: 0 auto 12px;
+}
+
 p.entrada-texto {
-    font-family: 'Noto Sans', sans-serif;
     font-size: 1.08em;
-    line-height: 1.65;
     color: #D5D5D5;
     max-width: 820px;
-    margin: 0 auto 20px auto;
-    text-align: center;
+    margin: 0 auto 20px;
 }
 
 p.frase-reflexiva {
@@ -210,7 +206,7 @@ p.frase-reflexiva {
 .resalte-palabra {
     color: #FFFFFF;
     font-weight: 600;
-    text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+    text-shadow: var(--resalte-brillo);
 }
 
 
@@ -249,10 +245,15 @@ p.frase-reflexiva {
 }
 
 .boton-comenzar:hover,
-.boton-continuar:hover {
+.boton-continuar:hover,
+.boton-flecha:hover {
     opacity: 1;
     filter: brightness(1.12) saturate(1.08);
     box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+}
+
+.boton-comenzar:hover,
+.boton-continuar:hover {
     transform: translateY(-1px);
 }
 
@@ -282,9 +283,6 @@ p.frase-reflexiva {
 }
 
 .boton-flecha:hover {
-    opacity: 1;
-    filter: brightness(1.12) saturate(1.08);
-    box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
     transform: translateY(calc(-50% - 1px));
 }
 
@@ -293,7 +291,7 @@ p.frase-reflexiva {
     position: relative;
     width: min(1200px, 94vw);
     height: clamp(420px, 62vh, 760px);
-    margin: 0 auto 52px auto;
+    margin: 0 auto 52px;
 }
 
 .boton-vinculo {
@@ -332,13 +330,15 @@ p.frase-reflexiva {
    5. PÁGINAS ESPECÍFICAS
    ============================================================= */
 
-/* ---- 5.1 Umbral (portada) ---- */
-#pagina-umbral {
-    background-image:
-        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
-        url("../img/fondo-arena.png");
+/* ---- 5.1 Fondo arena + overlay (Umbral, Huellas, Partitura, Agradecimiento) ---- */
+#pagina-umbral,
+#pagina-huellas,
+#pagina-partitura,
+#pagina-agradecimiento {
+    background-image: var(--overlay-atenuacion), url("../img/fondo-arena.png");
 }
 
+/* ---- 5.2 Umbral (solo ajustes de layout) ---- */
 #pagina-umbral main.contenido-centrado {
     margin-top: 80px;
 }
@@ -348,13 +348,7 @@ p.frase-reflexiva {
 }
 
 
-/* ---- 5.2 Huellas ---- */
-#pagina-huellas {
-    background-image:
-        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
-        url("../img/fondo-arena.png");
-}
-
+/* ---- 5.3 Huellas ---- */
 #pagina-huellas table.tabla-gustos {
     border-collapse: collapse;
     width: 82%;
@@ -386,11 +380,9 @@ p.frase-reflexiva {
     border-bottom: none;
 }
 
-/* ---- 5.3 Vínculos — Entrada ---- */
+/* ---- 5.4 Vínculos — Entrada ---- */
 #pagina-vinculos-entrada {
-    background-image:
-        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
-        url("../img/arena-objetos.png");
+    background-image: var(--overlay-atenuacion), url("../img/arena-objetos.png");
     background-size: 100% auto;
 }
 
@@ -403,12 +395,16 @@ p.frase-reflexiva {
 }
 
 
-/* ---- 5.4 Vínculos — Mapa ---- */
-#pagina-vinculos-mapa {
-    background-image: url("../img/arena-objetos.png");
+/* ---- 5.5 Vínculos — Mapa ---- */
+#pagina-vinculos-mapa,
+body.vinculo-detalle {
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
+}
+
+#pagina-vinculos-mapa {
+    background-image: url("../img/arena-objetos.png");
 }
 
 #pagina-vinculos-mapa main.contenido-seccion {
@@ -417,11 +413,8 @@ p.frase-reflexiva {
 }
 
 
-/* ---- 5.5 Vínculos — Detalle (común a los 7) ---- */
+/* ---- 5.6 Vínculos — Detalle (común a los 7) ---- */
 body.vinculo-detalle {
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
     animation: none;
 }
 
@@ -524,11 +517,9 @@ body.vinculo-detalle .texto-imagen p {
 #pagina-vinculo-perros2  { background-image: url("../img/hueso-arena.png"); }
 
 
-/* ---- 5.6 Fe y rito ---- */
+/* ---- 5.7 Fe y rito ---- */
 #pagina-fe-rito {
-    background-image:
-        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
-        url("../img/fondo-cielo-estrellado.png");
+    background-image: var(--overlay-atenuacion), url("../img/fondo-cielo-estrellado.png");
 }
 
 #pagina-fe-rito .lista-ritos {
@@ -555,17 +546,11 @@ body.vinculo-detalle .texto-imagen p {
     margin-bottom: 8px;
     color: #FFFFFF;
     font-weight: 600;
-    text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+    text-shadow: var(--resalte-brillo);
 }
 
 
-/* ---- 5.7 Partitura ---- */
-#pagina-partitura {
-    background-image:
-        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
-        url("../img/fondo-arena.png");
-}
-
+/* ---- 5.8 Partitura ---- */
 #pagina-partitura .tabla-partitura {
     width: min(980px, 86vw);
     border-collapse: collapse;
@@ -636,13 +621,7 @@ body.vinculo-detalle .texto-imagen p {
 }
 
 
-/* ---- 5.8 Agradecimiento ---- */
-#pagina-agradecimiento {
-    background-image:
-        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
-        url("../img/fondo-arena.png");
-}
-
+/* ---- 5.9 Agradecimiento ---- */
 #pagina-agradecimiento .intro-inspiracion {
     margin-bottom: 22px;
 }
