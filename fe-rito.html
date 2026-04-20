@@ -1,231 +1,42 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="img/star.ico">
-    <title>El Mapa de mi Regreso - Fe y rito</title>
-    <style>
-        /* --- Estilos Base (Copiados de index.html para coherencia) --- */
-        
-        body {
-            /* Estética sobria con fondo de arena oscura y texto blanco suave */
-            background-color: #1A1A1A; 
-            background-image: linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)), url("img/fondo-cielo-estrellado.png"); /* Mismo fondo que index.html pero más difuso */
-            background-size: cover;
-            background-position: top center;
-            background-repeat: no-repeat;
-            background-attachment: scroll;
-            color: #F5F5F5;
-            /* Tipografía Serif para el cuerpo */
-            font-family: serif; 
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            /* El fade-in general de la página al cargar */
-            animation: fadeInAnimation 3s;
-        }
-
-        /* Definición de la animación fade-in */
-        @keyframes fadeInAnimation {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* --- Maquetación del Encabezado (Header) --- */
-        
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 24px;
-            padding: 20px 40px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            box-sizing: border-box;
-            z-index: 1000;
-        }
-
-        .titulo-web {
-            /* Título de la web en el extremo superior izquierdo  */
-            font-size: 24px;
-            margin: 0;
-        }
-
-        /* --- Menú de Navegación Vertical Minimalista (Derecha) --- */
-        
-        nav.menu-vertical {
-            flex-shrink: 0;
-        }
-
-        nav.menu-vertical ul {
-            list-style-type: none; 
-            margin: 0;
-            padding: 0;
-            text-align: right; 
-        }
-
-        nav.menu-vertical li {
-            margin-bottom: 8px;
-        }
-
-        nav.menu-vertical a {
-            /* Estilos de opacidad y transiciones copiados de index.html */
-            color: #F5F5F5; 
-            text-decoration: none; 
-            font-size: 16px;
-            transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
-            opacity: 0.62;
-            text-shadow: none;
-        }
-
-        nav.menu-vertical a:hover,
-        nav.menu-vertical a.active {
-            color: #FFFFFF;
-            opacity: 1;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
-        }
-
-        /* --- Contenido Principal Maquetado por Bloques --- */
-        
-        main.contenido-bloques {
-            text-align: center; 
-            margin-top: 0;
-            padding: 130px 20px 120px;
-        }
-
-        /* Estilo para los Títulos de cada Bloque (h1 y h2) */
-        h1.titulo-seccion, h2.titulo-seccion {
-            font-size: 2.5em; /* Un poco más pequeño que la frase principal de index */
-            line-height: 1.2;
-            margin-bottom: 28px;
-            font-weight: normal;
-            color: #FFFFFF;
-        }
-
-        h2.titulo-seccion {
-            font-size: 2.1em;
-            margin-top: 50px; /* Espacio antes de cada h2 */
-        }
-
-        /* Clase para el resalte de palabras (copiado de index) */
-        .resalte-palabra {
-            color: #FFFFFF;
-            font-weight: 600;
-            text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
-        }
-
-        /* Estilo para los párrafos de texto narrativo */
-        p.texto-narrativo {
-            font-size: 1.15em;
-            line-height: 1.6;
-            color: #CCCCCC;
-            max-width: 800px; /* Limita el ancho para lectura cómoda */
-            margin: 0 auto 12px auto; /* Centrado horizontal */
-            text-align: center; /* Texto centrado */
-        }
-
-        .lista-ritos {
-            width: min(820px, 92vw);
-            margin: 0 auto;
-            padding: 0;
-            list-style: none;
-            text-align: left;
-        }
-
-        .lista-ritos li {
-            padding: 14px 0;
-            color: #CCCCCC;
-            font-size: 1.05em;
-            line-height: 1.65;
-        }
-
-        .lista-ritos li + li {
-            border-top: 1px solid rgba(255, 255, 255, 0.25);
-        }
-
-        .lista-ritos .titulo-rito {
-            display: block;
-            margin-bottom: 8px;
-            color: #FFFFFF;
-            font-weight: 600;
-            text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
-        }
-
-        /* Contenedor genérico para cada bloque con flecha */
-        .bloque-narrativo {
-            min-height: calc(100vh - 150px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 0; /* Cada bloque ocupa su propia pantalla */
-            padding: 20px 0;
-            box-sizing: border-box;
-        }
-
-        /* --- Botón de Acción Estilizado (Copiado de index.html) --- */
-        
-        .boton-continuar {
-            position: fixed;
-            right: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 54px;
-            height: 54px;
-            background-color: skyblue;
-            color: black;
-            text-decoration: none;
-            border-radius: 999px;
-            font-size: 28px;
-            font-weight: bold;
-            opacity: 0.78;
-            filter: brightness(0.9) saturate(0.9);
-            box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
-            transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease; 
-        }
-
-        .boton-continuar:hover {
-            opacity: 1;
-            filter: brightness(1.12) saturate(1.08);
-            box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
-            transform: translateY(calc(-50% - 1px));
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
+    <title>El camino de regreso - Fe y rito</title>
 </head>
-<body>
+<body id="pagina-fe-rito" class="header-fijo">
 
     <header>
-        <h1 class="titulo-web">El Mapa de mi Regreso </h1>
+        <h1 class="titulo-web">El camino de regreso</h1>
         <nav class="menu-vertical">
             <ul>
-                <li><a href="index.html">El Umbral </a></li>
-                <li><a href="huellas.html">Huellas </a></li>
-                <li><a href="vinculos-entrada.html">Vínculos </a></li>
-                <li><a href="fe-rito.html" class="active">Fe y rito </a></li>
-                <li><a href="partitura.html">La Partitura </a></li>
-                <li><a href="agradecimiento.html">Agradecimiento </a></li>
+                <li><a href="index.html">Umbral</a></li>
+                <li><a href="huellas.html">Huellas</a></li>
+                <li><a href="vinculos-entrada.html">Vínculos</a></li>
+                <li><a href="fe-rito.html" class="active">Fe y rito</a></li>
+                <li><a href="partitura.html">Partitura</a></li>
+                <li><a href="agradecimiento.html">Agradecimiento</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="contenido-bloques">
 
-        <section id="bloque1" class="bloque-narrativo">
-            <h1 class="titulo-seccion" style="font-size: 3.15em;">Inna lillahi wa inna ilayhi raji'un<br>(انا لله وانا اليه راجعون)</h1>
-            <p class="texto-narrativo">
+        <section class="bloque-narrativo" aria-labelledby="titulo-principal">
+            <h1 id="titulo-principal" class="titulo-especial">Inna lillahi wa inna ilayhi raji'un<br>(انا لله وانا اليه راجعون)</h1>
+            <h2 class="subtitulo-especial">
                 Ciertamente, a <span class="resalte-palabra">Alá</span> <span class="resalte-palabra">pertenecemos</span><br>
-                y a Él <span class="resalte-palabra">regresaremos</span>.<br><br>
+                y a Él <span class="resalte-palabra">regresaremos</span>.
+            </h2>
+            <p class="texto-narrativo">
                 Toda vida comienza con un <span class="resalte-palabra">origen</span> y termina con un <span class="resalte-palabra">regreso</span>.
             </p>
         </section>
 
-        <section id="bloque2" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">Mi relación con Dios</h2>
             <p class="texto-narrativo">
                 La fe que fue cambiando conmigo.<br><br>
@@ -234,14 +45,14 @@
             </p>
         </section>
 
-        <section id="bloque3" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">La infancia</h2>
             <p class="texto-narrativo">
                 Cuando era niña, Dios era casi como <span class="resalte-palabra">un amigo</span>. Era alguien en quien apoyarme, alguien que escuchaba cuando hablaba en silencio, alguien que me ofrecía un <span class="resalte-palabra">lugar seguro</span> donde llorar o pedir ayuda. Lo sentía como una <span class="resalte-palabra">presencia cercana</span>, un compañero invisible al que podía confiarle todo: mis <span class="resalte-palabra">miedos</span>, mis <span class="resalte-palabra">preguntas</span>, mis <span class="resalte-palabra">dudas</span>.
             </p>
         </section>
 
-        <section id="bloque4" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">El temor</h2>
             <p class="texto-narrativo">
                 Con el tiempo esa imagen empezó a cambiar. Comencé a verlo más como una figura de rectitud, alguien que observaba mis acciones y evaluaba si estaban bien o mal.<br><br>
@@ -249,7 +60,7 @@
             </p>
         </section>
 
-        <section id="bloque5" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">La distancia</h2>
             <p class="texto-narrativo">
                 Pero a medida que fui creciendo, ese temor empezó a incomodarme. Poco a poco <span class="resalte-palabra">tomé distancia</span>.<br><br>
@@ -257,7 +68,7 @@
             </p>
         </section>
 
-        <section id="bloque6" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">La contemplación</h2>
             <p class="texto-narrativo">
                 Con los años esa relación volvió a transformarse.<br><br>
@@ -267,7 +78,7 @@
             </p>
         </section>
 
-        <section id="bloque7" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">El vacío</h2>
             <p class="texto-narrativo">
                 Pero entonces apareció una pregunta mucho más cercana: mi propia existencia.<br><br>
@@ -277,7 +88,7 @@
             </p>
         </section>
 
-        <section id="bloque8" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">El reencuentro</h2>
             <p class="texto-narrativo">
                 Pero esta vez no como aquel amigo de la infancia, ni como una figura que me juzgaba desde arriba.<br><br>
@@ -292,7 +103,7 @@
             </p>
         </section>
 
-        <section id="bloque9" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">El regreso</h2>
             <p class="texto-narrativo">
                 La muerte no es una tragedia en sí misma. Para un creyente es el momento en que el <span class="resalte-palabra">alma</span> <span class="resalte-palabra">vuelve a su origen</span>.<br><br>
@@ -302,14 +113,14 @@
             </p>
         </section>
 
-        <section id="bloque10" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">Mi despedida</h2>
             <p class="texto-narrativo">
                 Me gustaría que mi despedida sea <span class="resalte-palabra">simple</span>. Sin <span class="resalte-palabra">lujos</span> ni <span class="resalte-palabra">ostentación</span>, de una manera que recuerde algo fundamental: que todos somos <span class="resalte-palabra">iguales ante Dios</span>.
             </p>
         </section>
 
-        <section id="bloque11" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">Ritos funerarios</h2>
             <ul class="lista-ritos">
                 <li>
@@ -327,7 +138,7 @@
             </ul>
         </section>
 
-        <section id="bloque12" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">El entierro</h2>
             <p class="texto-narrativo">
                 Si fuera posible elegir, me gustaría un entierro <span class="resalte-palabra">sencillo</span>, al aire libre, en un cementerio de parque. No quiero nichos ni estructuras de cemento; quiero <span class="resalte-palabra">volver a la tierra</span>.<br><br>
@@ -336,7 +147,7 @@
             </p>
         </section>
 
-        <section id="bloque13" class="bloque-narrativo">
+        <section class="bloque-narrativo">
             <h2 class="titulo-seccion">Conclusión</h2>
             <p class="texto-narrativo">
                 Quizás al final de la vida no se trate de haber entendido todo,<br>
@@ -351,10 +162,9 @@
             </p>
         </section>
 
-    <a href="partitura.html" class="boton-continuar" aria-label="Continuar a La Partitura" title="Continuar a La Partitura">→</a>
+        <a href="partitura.html" class="boton-flecha" aria-label="Continuar a Partitura" title="Continuar a Partitura">→</a>
 
     </main>
 
 </body>
 </html>
-

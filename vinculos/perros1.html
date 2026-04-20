@@ -1,290 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
-	<link rel="icon" type="image/x-icon" href="../img/star.ico">
-	<title>El Mapa de mi Regreso - Vinculos</title>
-	<style>
-		body {
-			background-color: #1A1A1A;
-			background-image: url("../img/soga-arena.png");
-			background-size: 100% auto;
-			background-position: top center;
-			background-repeat: no-repeat;
-			background-attachment: scroll;
-			min-height: 100vh;
-			color: #F5F5F5;
-			font-family: serif;
-			margin: 0;
-			padding: 0;
-		}
-
-		.overlay-vinculos {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			z-index: 1;
-			cursor: pointer;
-		}
-
-		header {
-			overflow: hidden;
-			padding: 20px 40px;
-			position: relative;
-			z-index: 100;
-		}
-
-		.titulo-web {
-			float: left;
-			font-size: 24px;
-			margin: 0;
-		}
-
-		nav.menu-vertical {
-			float: right;
-		}
-
-		nav.menu-vertical ul {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			text-align: right;
-		}
-
-		nav.menu-vertical li {
-			margin-bottom: 6px;
-		}
-
-		nav.menu-vertical a {
-			color: #F5F5F5;
-			text-decoration: none;
-			font-size: 16px;
-			transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
-			opacity: 0.62;
-			text-shadow: none;
-		}
-
-		nav.menu-vertical a:hover,
-		nav.menu-vertical a.active {
-			color: #FFFFFF;
-			opacity: 1;
-			text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
-		}
-
-		main.contenido-seccion {
-			text-align: center;
-			padding-bottom: 0;
-		}
-
-		p.descripcion-seccion {
-			font-size: 1.18em;
-			color: #D5D5D5;
-			max-width: 820px;
-			margin: 0 auto 24px auto;
-			line-height: 1.6;
-		}
-
-		.boton-continuar {
-			position: fixed;
-			right: 22px;
-			top: 50%;
-			transform: translateY(-50%);
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			width: 54px;
-			height: 54px;
-			background-color: skyblue;
-			color: black;
-			text-decoration: none;
-			border-radius: 999px;
-			font-size: 28px;
-			font-weight: bold;
-			opacity: 0.78;
-			filter: brightness(0.9) saturate(0.9);
-			box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
-			transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-			z-index: 50;
-		}
-
-		.boton-continuar:hover {
-			opacity: 1;
-			filter: brightness(1.12) saturate(1.08);
-			box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
-			transform: translateY(calc(-50% - 1px));
-		}
-
-		.lista-vinculos {
-			position: relative;
-			width: min(1200px, 94vw);
-			height: clamp(420px, 62vh, 760px);
-			margin: 0 auto 52px auto;
-			z-index: 40;
-			pointer-events: none;
-		}
-
-		.boton-vinculo {
-			position: absolute;
-			transform: translate(-50%, -50%);
-			display: inline-block;
-			padding: 10px 18px;
-			border-radius: 999px;
-			text-decoration: none;
-			color: #F5F5F5;
-			border: 1px solid rgba(245, 245, 245, 0.28);
-			background: rgba(255, 255, 255, 0.05);
-			opacity: 0.85;
-			transition: opacity 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
-			z-index: 25;
-			pointer-events: auto;
-		}
-
-		.boton-vinculo:hover {
-			opacity: 1;
-			background: rgba(255, 255, 255, 0.12);
-			transform: translate(-50%, calc(-50% - 1px));
-		}
-
-		.boton-vinculo.active {
-			opacity: 1;
-			background: rgba(255, 255, 255, 0.20);
-			border-color: rgba(255, 255, 255, 0.65);
-			box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 18px rgba(255, 255, 255, 0.10);
-		}
-
-		.contenedor-principal {
-			position: relative;
-			width: 100%;
-			height: 520px;
-			z-index: 7;
-		}
-
-		.contenedor-imagen-texto {
-			position: absolute;
-			top: 25%;
-			left: 45%;
-			transform: translate(-50%, -50%);
-			width: min(550px, 85vw);
-			height: 520px;
-			background-image: url("../img/papel-vintage.png");
-			background-size: contain;
-			background-position: center;
-			background-repeat: no-repeat;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			z-index: 30;
-			text-decoration: none;
-			cursor: pointer;
-		}
-
-		.texto-imagen {
-			width: 85%;
-			height: 85%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			padding: 70px;
-			text-align: center;
-		}
-
-		.texto-imagen p {
-			font-style: italic;
-			font-size: 0.70em;
-			line-height: 1.8;
-			color: #0F0F0F;
-			margin: 0;
-		}
-
-		@media (max-width: 900px) {
-			.lista-vinculos {
-				height: auto;
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 10px;
-			}
-
-			.boton-vinculo {
-				position: static;
-				transform: none;
-				text-align: center;
-			}
-
-			.boton-vinculo:hover {
-				transform: translateY(-1px);
-			}
-
-			.contenedor-imagen-texto {
-				width: 95vw;
-				height: 350px;
-				position: relative;
-				top: auto;
-				left: auto;
-				transform: none;
-			}
-
-			.texto-imagen {
-				padding: 20px;
-				font-size: 0.75em;
-			}
-
-			.contenedor-principal {
-				position: relative;
-				padding: 0;
-				height: auto;
-			}
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../img/star.ico">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>El camino de regreso - Mis hermanos perrunos</title>
 </head>
-<body>
+<body id="pagina-vinculo-perros1" class="vinculo-detalle">
 
-	<header>
-		<h1 class="titulo-web">El Mapa de mi Regreso </h1>
-		<nav class="menu-vertical">
-			<ul>
-				<li><a href="../index.html">El Umbral </a></li>
-				<li><a href="../huellas.html">Huellas </a></li>
-				<li><a href="../vinculos-entrada.html" class="active">Vinculos </a></li>
-				<li><a href="../fe-rito.html">Fe y rito </a></li>
-				<li><a href="../partitura.html">La Partitura </a></li>
-				<li><a href="../agradecimiento.html">Agradecimiento </a></li>
-			</ul>
-		</nav>
-	</header>
+    <header>
+        <h1 class="titulo-web">El camino de regreso</h1>
+        <nav class="menu-vertical">
+            <ul>
+                <li><a href="../index.html">Umbral</a></li>
+                <li><a href="../huellas.html">Huellas</a></li>
+                <li><a href="../vinculos-entrada.html" class="active">Vínculos</a></li>
+                <li><a href="../fe-rito.html">Fe y rito</a></li>
+                <li><a href="../partitura.html">Partitura</a></li>
+                <li><a href="../agradecimiento.html">Agradecimiento</a></li>
+            </ul>
+        </nav>
+    </header>
 
-	<main class="contenido-seccion">
-		<a href="../vinculos.html" class="overlay-vinculos"></a>
-		<div class="contenedor-principal">
-			<a href="../vinculos.html" class="contenedor-imagen-texto" aria-label="Volver a Vinculos">
-				<div class="texto-imagen">
-					<p>
-						Mis hermanos perrunos<br><br>
-						Esta soga representa el juego, la paciencia, la unión y la compañía que compartimos.<br><br>
-						Con Duy aprendí algo muy simple: a veces lo único que alguien necesita es presencia. Recuerdo quedarme noches enteras acariciándolo cuando era cachorro para que no se sintiera solo.<br><br>
-						Layka me enseñó que las cosas materiales no valen tanto como creemos. Para ella, un momento de juego compartido valía más que cualquier objeto.<br><br>
-						Pam, con su carácter fuerte, me mostró algo que después reconocí muchas veces en la vida: incluso quien parece más feroz puede esconder una enorme dulzura.<br><br>
-						Ellos fueron, en muchos sentidos, mis primeros hermanitos.
-					</p>
-				</div>
-			</a>
+    <main class="contenido-seccion">
+        <a href="../vinculos.html" class="overlay-vinculos"></a>
+        <div class="contenedor-principal">
+            <a href="../vinculos.html" class="contenedor-imagen-texto pos-detalle-perros1" aria-label="Volver a Vínculos">
+                <div class="texto-imagen">
+                    <p>
+                        Mis hermanos perrunos<br><br>
+                        Esta soga representa el juego, la paciencia, la unión y la compañía que compartimos.<br><br>
+                        Con Duy aprendí algo muy simple: a veces lo único que alguien necesita es presencia. Recuerdo quedarme noches enteras acariciándolo cuando era cachorro para que no se sintiera solo.<br><br>
+                        Layka me enseñó que las cosas materiales no valen tanto como creemos. Para ella, un momento de juego compartido valía más que cualquier objeto.<br><br>
+                        Pam, con su carácter fuerte, me mostró algo que después reconocí muchas veces en la vida: incluso quien parece más feroz puede esconder una enorme dulzura.<br><br>
+                        Ellos fueron, en muchos sentidos, mis primeros hermanitos.
+                    </p>
+                </div>
+            </a>
 
-			<div class="lista-vinculos">
-				<a href="mama.html" class="boton-vinculo" style="left: 20%; top: 25%;">Mi madre</a>
-				<a href="hermana.html" class="boton-vinculo" style="left: 78%; top: 15%;">Mi hermana</a> 
-				<!-- <a href="esposo.html" class="boton-vinculo" style="left: 45%; top: 75%;">Mi esposo</a> -->
-				<a href="papa.html" class="boton-vinculo" style="left: 10%; top: 45%;">Mi padre</a>
-				<a href="gatos.html" class="boton-vinculo" style="left: 68%; top: 85%;">Mis bebes gatunos</a>
-				<a href="perros1.html" class="boton-vinculo active" style="left: 14%; top: 75%;">Mis hermanos perrunos</a>
-				<a href="perros2.html" class="boton-vinculo" style="left: 90%; top: 80%;">Mis hijas perrunas</a>
-			</div>
-		</div>
+            <div class="lista-vinculos">
+                <a href="mama.html"     class="boton-vinculo pos-mama">Mi madre</a>
+                <a href="hermana.html"  class="boton-vinculo pos-hermana">Mi hermana</a>
+                <a href="esposo.html"   class="boton-vinculo pos-esposo">Mi esposo</a>
+                <a href="papa.html"     class="boton-vinculo pos-papa">Mi padre</a>
+                <a href="gatos.html"    class="boton-vinculo pos-gatos">Mis bebes gatunos</a>
+                <a href="perros1.html"  class="boton-vinculo pos-perros1 active">Mis hermanos perrunos</a>
+                <a href="perros2.html"  class="boton-vinculo pos-perros2">Mis hijas perrunas</a>
+            </div>
+        </div>
 
-		<a href="../fe-rito.html" class="boton-continuar" aria-label="Continuar a Fe y rito" title="Continuar a Fe y rito">→</a>
-	</main>
+        <a href="../fe-rito.html" class="boton-flecha" aria-label="Continuar a Fe y rito" title="Continuar a Fe y rito">→</a>
+    </main>
 
 </body>
 </html>
-
-

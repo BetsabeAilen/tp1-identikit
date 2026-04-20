@@ -1,0 +1,825 @@
+/* =============================================================
+   El Camino de Regreso — CSS global unificado
+   Organización:
+        1. Base
+        2. Layout (header, nav, main)
+        3. Tipografía
+        4. Componentes
+        5. Páginas específicas
+        6. Responsive
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Balthazar&family=Caveat&family=Grenze:wght@400;500&family=Noto+Sans:wght@400;600&family=Noto+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+
+
+/* =============================================================
+   1. BASE
+   ============================================================= */
+
+body {
+    background-color: #1A1A1A;
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    color: #F5F5F5;
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    animation: fadeInAnimation 3s;
+}
+
+@keyframes fadeInAnimation {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+/* =============================================================
+   2. LAYOUT
+   ============================================================= */
+
+/* ---- Header tipo A: flotante sobre el flujo (portadas e índices) ---- */
+header {
+    overflow: hidden;
+    padding: 20px 40px;
+}
+
+.titulo-web {
+    float: left;
+    font-family: 'Grenze', serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 0;
+}
+
+nav.menu-vertical {
+    float: right;
+}
+
+nav.menu-vertical ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+nav.menu-vertical li {
+    margin-bottom: 8px;
+}
+
+nav.menu-vertical a {
+    color: #F5F5F5;
+    text-decoration: none;
+    font-family: 'Balthazar', serif;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+    opacity: 0.62;
+    text-shadow: none;
+    transition: color 0.25s ease, opacity 0.25s ease, text-shadow 0.25s ease;
+}
+
+nav.menu-vertical a:hover,
+nav.menu-vertical a.active {
+    color: #FFFFFF;
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.45);
+}
+
+/* ---- Header tipo B: fijo arriba (páginas narrativas) ---- */
+body.header-fijo header {
+    overflow: visible;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 20px 40px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+body.header-fijo .titulo-web {
+    float: none;
+}
+
+body.header-fijo nav.menu-vertical {
+    float: none;
+    flex-shrink: 0;
+}
+
+/* ---- Contenedores de contenido ---- */
+main.contenido-centrado {
+    text-align: center;
+    margin-top: 60px;
+    padding: 0 20px;
+}
+
+main.contenido-bloques {
+    text-align: center;
+    margin-top: 0;
+    padding: 130px 20px 120px;
+}
+
+main.contenido-seccion {
+    text-align: center;
+    margin-top: 60px;
+    padding: 0 20px 80px 20px;
+}
+
+
+/* =============================================================
+   3. TIPOGRAFÍA
+   ============================================================= */
+
+/* ---- Títulos de sección ---- */
+h1.titulo-seccion,
+h2.titulo-seccion {
+    font-family: 'Balthazar', serif;
+    line-height: 1.2;
+    margin: 0 0 28px;
+    font-weight: normal;
+    color: #FFFFFF;
+    letter-spacing: 0.01em;
+}
+
+h1.titulo-seccion {
+    font-size: 3.3em;
+}
+
+h2.titulo-seccion {
+    font-size: 2.2em;
+}
+
+/* ---- Títulos especiales (portadas / cierres) ---- */
+h1.titulo-especial {
+    font-family: 'Grenze', serif;
+    font-size: 3.3em;
+    line-height: 1.1;
+    margin: 0 0 28px;
+    font-weight: 500;
+    color: #FFFFFF;
+}
+
+h2.subtitulo-especial {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin: -16px auto 32px;
+    font-weight: normal;
+    color: #CCCCCC;
+    max-width: 820px;
+}
+
+/* ---- Párrafos ---- */
+p.texto-narrativo {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1.05em;
+    line-height: 1.65;
+    color: #CCCCCC;
+    max-width: 800px;
+    margin: 0 auto 12px auto;
+    text-align: center;
+}
+
+p.entrada-texto {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1.08em;
+    line-height: 1.65;
+    color: #D5D5D5;
+    max-width: 820px;
+    margin: 0 auto 20px auto;
+    text-align: center;
+}
+
+p.frase-reflexiva {
+    font-family: 'Noto Serif', serif;
+    font-size: 1.08em;
+    line-height: 1.7;
+    color: #D8D8D8;
+    font-style: italic;
+    max-width: 720px;
+    margin: 30px auto 0;
+    text-align: center;
+}
+
+.resalte-palabra {
+    color: #FFFFFF;
+    font-weight: 600;
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+}
+
+
+/* =============================================================
+   4. COMPONENTES
+   ============================================================= */
+
+/* ---- Bloque narrativo de pantalla completa ---- */
+.bloque-narrativo {
+    min-height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+/* ---- Botón rectangular pill (comenzar / continuar) ---- */
+.boton-comenzar,
+.boton-continuar {
+    display: inline-block;
+    margin-top: 4px;
+    padding: 10px 30px;
+    background-color: skyblue;
+    color: black;
+    text-decoration: none;
+    border-radius: 12px;
+    font-family: 'Noto Serif', serif;
+    font-size: 18px;
+    opacity: 0.78;
+    filter: brightness(0.9) saturate(0.9);
+    box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
+    transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.boton-comenzar:hover,
+.boton-continuar:hover {
+    opacity: 1;
+    filter: brightness(1.12) saturate(1.08);
+    box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+    transform: translateY(-1px);
+}
+
+/* ---- Botón circular flotante (siguiente sección) ---- */
+.boton-flecha {
+    position: fixed;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    background-color: skyblue;
+    color: black;
+    text-decoration: none;
+    border-radius: 999px;
+    font-family: 'Noto Serif', serif;
+    font-size: 28px;
+    font-weight: bold;
+    opacity: 0.78;
+    filter: brightness(0.9) saturate(0.9);
+    box-shadow: 0 6px 14px rgba(135, 206, 235, 0.2);
+    transition: opacity 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+    z-index: 50;
+}
+
+.boton-flecha:hover {
+    opacity: 1;
+    filter: brightness(1.12) saturate(1.08);
+    box-shadow: 0 10px 24px rgba(135, 206, 235, 0.45);
+    transform: translateY(calc(-50% - 1px));
+}
+
+/* ---- Lista de vínculos (mapa y detalle) ---- */
+.lista-vinculos {
+    position: relative;
+    width: min(1200px, 94vw);
+    height: clamp(420px, 62vh, 760px);
+    margin: 0 auto 52px auto;
+}
+
+.boton-vinculo {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    padding: 10px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #F5F5F5;
+    font-family: 'Noto Serif', serif;
+    font-size: 1em;
+    border: 1px solid rgba(245, 245, 245, 0.28);
+    background: rgba(255, 255, 255, 0.05);
+    opacity: 0.85;
+    transition: opacity 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+}
+
+.boton-vinculo:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.12);
+    transform: translate(-50%, calc(-50% - 1px));
+}
+
+/* Posiciones únicas de cada botón de vínculo */
+.boton-vinculo.pos-mama     { left: 20%; top: 15%; }
+.boton-vinculo.pos-hermana  { left: 78%; top: 8%; }
+.boton-vinculo.pos-esposo   { left: 45%; top: 68%; }
+.boton-vinculo.pos-papa     { left: 10%; top: 35%; }
+.boton-vinculo.pos-gatos    { left: 68%; top: 75%; }
+.boton-vinculo.pos-perros1  { left: 20%; top: 67%; }
+.boton-vinculo.pos-perros2  { left: 90%; top: 70%; }
+
+
+/* =============================================================
+   5. PÁGINAS ESPECÍFICAS
+   ============================================================= */
+
+/* ---- 5.1 Umbral (portada) ---- */
+#pagina-umbral {
+    background-image:
+        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
+        url("../img/fondo-arena.png");
+}
+
+#pagina-umbral main.contenido-centrado {
+    margin-top: 80px;
+}
+
+#pagina-umbral h2.subtitulo-especial {
+    margin-bottom: 100px;
+}
+
+
+/* ---- 5.2 Huellas ---- */
+#pagina-huellas {
+    background-image:
+        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
+        url("../img/fondo-arena.png");
+}
+
+#pagina-huellas table.tabla-gustos {
+    border-collapse: collapse;
+    width: 82%;
+    max-width: 760px;
+    margin: 36px auto;
+    text-align: left;
+    font-size: 0.92em;
+    color: #CCCCCC;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#pagina-huellas table.tabla-gustos th,
+#pagina-huellas table.tabla-gustos td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#pagina-huellas table.tabla-gustos th {
+    color: #FFFFFF;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+
+#pagina-huellas table.tabla-gustos tr:last-child td {
+    border-bottom: none;
+}
+
+/* ---- 5.3 Vínculos — Entrada ---- */
+#pagina-vinculos-entrada {
+    background-image:
+        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
+        url("../img/arena-objetos.png");
+    background-size: 100% auto;
+}
+
+#pagina-vinculos-entrada .acciones-entrada {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 48px;
+}
+
+
+/* ---- 5.4 Vínculos — Mapa ---- */
+#pagina-vinculos-mapa {
+    background-image: url("../img/arena-objetos.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#pagina-vinculos-mapa main.contenido-seccion {
+    margin-top: 0;
+    padding-bottom: 35px;
+}
+
+
+/* ---- 5.5 Vínculos — Detalle (común a los 7) ---- */
+body.vinculo-detalle {
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    animation: none;
+}
+
+body.vinculo-detalle header {
+    position: relative;
+    z-index: 100;
+}
+
+body.vinculo-detalle main.contenido-seccion {
+    margin-top: 0;
+    padding-bottom: 0;
+}
+
+body.vinculo-detalle .overlay-vinculos {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+body.vinculo-detalle .lista-vinculos {
+    z-index: 40;
+    pointer-events: none;
+}
+
+body.vinculo-detalle .boton-vinculo {
+    z-index: 25;
+    pointer-events: auto;
+}
+
+body.vinculo-detalle .boton-vinculo.active {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.20);
+    border-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12), 0 0 18px rgba(255, 255, 255, 0.10);
+}
+
+body.vinculo-detalle .contenedor-principal {
+    position: relative;
+    width: 100%;
+    height: 520px;
+    z-index: 7;
+}
+
+body.vinculo-detalle .contenedor-imagen-texto {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: min(550px, 85vw);
+    height: 520px;
+    background-image: url("../img/papel-vintage.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Posiciones únicas de cada papel vintage (se ubican cerca del botón activo) */
+body.vinculo-detalle .contenedor-imagen-texto.pos-detalle-mama     { top: 18%; left: 67%; }
+body.vinculo-detalle .contenedor-imagen-texto.pos-detalle-hermana  { top: 18%; left: 48%; }
+body.vinculo-detalle .contenedor-imagen-texto.pos-detalle-esposo   { top: 10%; left: 40%; }
+body.vinculo-detalle .contenedor-imagen-texto.pos-detalle-papa     { top: 15%; left: 38%; }
+body.vinculo-detalle .contenedor-imagen-texto.pos-detalle-gatos    { top: 18%; left: 48%; }
+body.vinculo-detalle .contenedor-imagen-texto.pos-detalle-perros1  { top: 15%; left: 48%; }
+body.vinculo-detalle .contenedor-imagen-texto.pos-detalle-perros2  { top: 18%; left: 65%; }
+
+body.vinculo-detalle .texto-imagen {
+    width: 78%;
+    height: 78%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 34px;
+    text-align: center;
+}
+
+body.vinculo-detalle .texto-imagen p {
+    font-family: 'Caveat', cursive;
+    font-size: 0.92em;
+    line-height: 1.15;
+    color: #0F0F0F;
+    margin: 0;
+}
+
+/* Imagen de fondo única de cada detalle de vínculo */
+#pagina-vinculo-mama     { background-image: url("../img/botas-arena.png"); }
+#pagina-vinculo-hermana  { background-image: url("../img/corazon-piedra.png"); }
+#pagina-vinculo-esposo   { background-image: url("../img/sello-arena.png"); }
+#pagina-vinculo-papa     { background-image: url("../img/reloj-arena.png"); }
+#pagina-vinculo-gatos    { background-image: url("../img/cascabel-arena.png"); }
+#pagina-vinculo-perros1  { background-image: url("../img/soga-arena.png"); }
+#pagina-vinculo-perros2  { background-image: url("../img/hueso-arena.png"); }
+
+
+/* ---- 5.6 Fe y rito ---- */
+#pagina-fe-rito {
+    background-image:
+        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
+        url("../img/fondo-cielo-estrellado.png");
+}
+
+#pagina-fe-rito .lista-ritos {
+    width: min(820px, 92vw);
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+}
+
+#pagina-fe-rito .lista-ritos li {
+    padding: 14px 0;
+    color: #CCCCCC;
+    font-size: 1.05em;
+    line-height: 1.65;
+}
+
+#pagina-fe-rito .lista-ritos li + li {
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+#pagina-fe-rito .lista-ritos .titulo-rito {
+    display: block;
+    margin-bottom: 8px;
+    color: #FFFFFF;
+    font-weight: 600;
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+}
+
+
+/* ---- 5.7 Partitura ---- */
+#pagina-partitura {
+    background-image:
+        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
+        url("../img/fondo-arena.png");
+}
+
+#pagina-partitura .tabla-partitura {
+    width: min(980px, 86vw);
+    border-collapse: collapse;
+    margin: 0 auto 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#pagina-partitura .tabla-partitura thead th {
+    padding: 14px 16px;
+    text-align: left;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+#pagina-partitura .tabla-partitura th,
+#pagina-partitura .tabla-partitura td {
+    border-left: none;
+    border-right: none;
+}
+
+#pagina-partitura .tabla-partitura tbody td {
+    padding: 16px;
+    vertical-align: top;
+    color: #DCD8CF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+#pagina-partitura .tabla-partitura tbody tr:last-child td {
+    border-bottom: none;
+}
+
+#pagina-partitura .tabla-partitura tbody tr {
+    transition: background-color 0.25s ease;
+}
+
+#pagina-partitura .tabla-partitura tbody tr:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+#pagina-partitura .tabla-partitura .cancion {
+    font-size: 1.05em;
+    color: #FFFFFF;
+    margin: 0 0 4px;
+}
+
+#pagina-partitura .tabla-partitura .artista {
+    font-size: 0.95em;
+    color: #C7C2B7;
+    margin: 0;
+}
+
+#pagina-partitura .tabla-partitura .descripcion {
+    margin: 0;
+    line-height: 1.65;
+    color: #D8D4CB;
+    text-align: left;
+}
+
+#pagina-partitura .tabla-partitura .audio-fila {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+
+/* ---- 5.8 Agradecimiento ---- */
+#pagina-agradecimiento {
+    background-image:
+        linear-gradient(180deg, rgba(10, 12, 18, 0.34), rgba(10, 12, 18, 0.58)),
+        url("../img/fondo-arena.png");
+}
+
+#pagina-agradecimiento .intro-inspiracion {
+    margin-bottom: 22px;
+}
+
+#pagina-agradecimiento .sitios-inspiracion {
+    width: min(900px, 94vw);
+    margin: 12px auto 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+#pagina-agradecimiento .sitio-item a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #F5F5F5;
+    font-family: 'Noto Serif', serif;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.04);
+    opacity: 0.86;
+    transition: opacity 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+}
+
+#pagina-agradecimiento .sitio-item a:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+#pagina-agradecimiento .icono-link {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    fill: none;
+    opacity: 0.92;
+}
+
+#pagina-agradecimiento .cierre-separado {
+    width: min(820px, 94vw);
+    margin-top: 34px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+#pagina-agradecimiento .bloque-narrativo {
+    min-height: auto;
+    padding: 60px 0;
+}
+
+
+/* =============================================================
+   6. RESPONSIVE
+   ============================================================= */
+
+@media (max-width: 900px) {
+
+    /* ---- Layout ---- */
+    body.header-fijo header {
+        padding: 18px 18px;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    /* ---- Vínculos — Entrada ---- */
+    #pagina-vinculos-entrada .acciones-entrada {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ---- Vínculos — Mapa y Detalle (reacomodo de botones) ---- */
+    .lista-vinculos {
+        height: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .boton-vinculo {
+        position: static;
+        transform: none;
+        text-align: center;
+    }
+
+    .boton-vinculo:hover {
+        transform: translateY(-1px);
+    }
+
+    /* ---- Vínculos — Detalle ---- */
+    body.vinculo-detalle .contenedor-principal {
+        position: relative;
+        padding: 0;
+        height: auto;
+    }
+
+    body.vinculo-detalle .contenedor-imagen-texto {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 95vw;
+        height: 350px;
+    }
+
+    body.vinculo-detalle .texto-imagen {
+        padding: 0;
+        font-size: 0.75em;
+    }
+
+    /* ---- Tipografía en mobile ---- */
+    h1.titulo-seccion,
+    h1.titulo-especial {
+        font-size: 2.55em;
+    }
+
+    h2.titulo-seccion {
+        font-size: 1.85em;
+    }
+
+    p.entrada-texto {
+        font-size: 1.04em;
+    }
+
+    /* ---- Main en páginas con header fijo (mobile) ---- */
+    body.header-fijo main.contenido-bloques {
+        padding-top: 168px;
+    }
+
+    /* ---- Partitura ---- */
+    #pagina-partitura .tabla-partitura {
+        width: min(980px, 94vw);
+    }
+
+    #pagina-partitura .tabla-partitura thead {
+        display: none;
+    }
+
+    #pagina-partitura .tabla-partitura,
+    #pagina-partitura .tabla-partitura tbody,
+    #pagina-partitura .tabla-partitura tr,
+    #pagina-partitura .tabla-partitura td {
+        display: block;
+        width: 100%;
+    }
+
+    #pagina-partitura .tabla-partitura tbody tr {
+        margin-bottom: 14px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    #pagina-partitura .tabla-partitura tbody td {
+        padding: 12px;
+        border-bottom: none;
+    }
+
+    /* ---- Agradecimiento ---- */
+    #pagina-agradecimiento .sitios-inspiracion {
+        grid-template-columns: 1fr;
+        width: min(520px, 94vw);
+    }
+
+    #pagina-agradecimiento .bloque-narrativo {
+        min-height: auto;
+        padding: 34px 0;
+    }
+
+    #pagina-agradecimiento .cierre-separado {
+        margin-top: 26px;
+        padding-top: 20px;
+    }
+
+}
